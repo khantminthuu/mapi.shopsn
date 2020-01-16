@@ -1,0 +1,10 @@
+Application/Runtime/
+.project
+.buildpath
+.settings
+Application/Common/Conf/db_config.php
+.idea/
+Log/
+Runtime/
+sonar-scanner.properties
+.scannerwork/
