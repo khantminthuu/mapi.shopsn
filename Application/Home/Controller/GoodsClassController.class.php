@@ -73,8 +73,19 @@ class GoodsClassController
             $this->objController->ajaxReturnData("","0","请求失败");
         }
     }
-    
+    /*
+        Tweltar Phyo Wai
+    */
+        public function getNavCategory()
+    {
 
+        $ret = $this->logic->getNavbar();
+
+        $this->objController->promptPjax($ret,$this->logic->getErrorMessage());
+
+        $this->objController->ajaxReturnData($ret);
+
+    }
     /**
      * 获取三级分类下面的商品
      *

@@ -66,6 +66,19 @@ class GoodsClassLogic extends AbstractGetDataLogic
         }
         return $getDetail;
     }
+    /*
+        Tweltar Phyo Wai
+    */
+      public function getNavbar(){
+
+        $where['hide_status'] = 1;
+        $data = M('nav_category')->where($where)->field('id,title')->select();
+        foreach ($data as $key => $value){
+            $img = M('nav_category')->where(['id'=>$value['id'],'hide_status'=>1])->field('pic_url')->select();
+            $data[$key]['img'] = $img;
+        }
+        return $data;
+    }
     /**
      * 获取所有的一级分类ID
      *
