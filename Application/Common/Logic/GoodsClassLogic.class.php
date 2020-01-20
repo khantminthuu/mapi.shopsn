@@ -56,6 +56,16 @@ class GoodsClassLogic extends AbstractGetDataLogic
         }
         return $firstClass;
     }
+    /*
+    *khantminthu
+    */
+    public function getClass(){
+        $getDetail = $this->modelObj->getClass($this->data);
+        if(empty($getDetail)){
+            return false;
+        }
+        return $getDetail;
+    }
     /**
      * 获取所有的一级分类ID
      *

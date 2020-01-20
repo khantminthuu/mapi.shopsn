@@ -144,24 +144,7 @@ class GoodsLogic extends AbstractGetDataLogic
         $where['p_id'] = '0';
         $where['status'] = '0';
         $where['shelves'] = '1';
-        // 获取福父id
-//        $where = [
-//            GoodsModel::$approvalStatus_d => '1',
-//            GoodsModel::$pId_d => '0',
-//        	GoodsModel::$status_d => '0',
-//        ];
-//        $p_id = $this->modelObj->where($where)->field("id")->select();
-//        if (empty($p_id)) {
-//            return array("status"=>0,"message"=>"暂无数据","data"=>"");
-//        }
-//        $p_where = array_column($p_id, 'id');
-        
         $field = 'id,id as goods_id,title,price_member,comment_member,sales_sum,store_id,goods_type,p_id';
-//        $g_where = [];
-//        $g_where['p_id']  =array("IN",$p_where);
-//        $g_where['approval_status']  = '1';
-//        $g_where['status']  = '0';
-//        $g_where[GoodsModel::$shelves_d] = '1';
         if (!empty($this->data['title'])) {
             $g_where['title']  =['like', '%' . $this->data["title"] . '%'];
         }
@@ -238,6 +221,8 @@ class GoodsLogic extends AbstractGetDataLogic
         return $pId;
       
     }
+
+
 
      /**
      * 获取子类商品【上架的】

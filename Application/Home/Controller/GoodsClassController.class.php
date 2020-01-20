@@ -21,8 +21,6 @@ class GoodsClassController
      */
     public function __construct(array $args = [])
     {
-        
-
         $this->args = $args;
         $this->init();
         $this->logic = new GoodsClassLogic($args);
@@ -48,15 +46,41 @@ class GoodsClassController
             $this->objController->ajaxReturnData($ret);
         }else{
             $this->objController->ajaxReturnData("","0","请求失败");
-            }}
+        }}
 
+        /*
+        *khantminthu
+        *get class
+        */
+        public function getClass(){
+            if(IS_GET){
+             $checkObj = new CheckParam($this->logic->getValidateByLogin(), $this->args);
+
+             $status = $checkObj->checkParam();
+
+             $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+
+             /*This is check for data exit*/
+
+             $ret = $this->logic->getClass();
+             echo "<pre>";
+             print_r($ret);
+             die;
+             $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
+
+             $this->objController->ajaxReturnData($ret);
+         }else{
+            $this->objController->ajaxReturnData("","0","请求失败");
+        }
+    }
+    
 
     /**
      * 获取三级分类下面的商品
      *
      */
     public function getClassGoods(){ 
-        
+
 //        $checkObj = new CheckParam($this->goodslogic->getValidateByLogin(), $this->args);
 //
 //        $status = $checkObj->checkParam();
@@ -70,7 +94,7 @@ class GoodsClassController
         $this->objController->ajaxReturnData($ret['data'],$ret['status'],$ret['message']);
         
     }
-   
+
     /**
      * 商品搜索
      *
@@ -91,7 +115,7 @@ class GoodsClassController
      *
      */
     public function getFirstId(){
-       
+
         $ret = $this->logic->getFirstClassId();
 
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
@@ -138,7 +162,7 @@ class GoodsClassController
             $this->objController->ajaxReturnData("","0","请求失败");
         }
     }
-	
+
     /**
      * 首页楼层数据
      */
@@ -155,17 +179,17 @@ class GoodsClassController
         $adLogic = new AdLogic($goodsClass);
         $class = $adLogic->getFloorAd();
     	//推荐分类的商品
-    	$goodsLogic = new GoodsLogic($goodsClass);
-    	
-    	$goods = $goodsLogic->getRecommend();
-    	
-    	$goodsImage = new GoodsImagesLogic($goods, $goodsLogic->getSplitKeyByPId(), $this->args);
-		
-    	Tool::connect('parseString');
-    	
-    	$source = $goodsImage->getResult();
-    	
-    	$this->objController->ajaxReturnData(['goods' => $source, 'class' => $goodsClass,'ad'=>$class]);
+        $goodsLogic = new GoodsLogic($goodsClass);
+
+        $goods = $goodsLogic->getRecommend();
+
+        $goodsImage = new GoodsImagesLogic($goods, $goodsLogic->getSplitKeyByPId(), $this->args);
+
+        Tool::connect('parseString');
+
+        $source = $goodsImage->getResult();
+
+        $this->objController->ajaxReturnData(['goods' => $source, 'class' => $goodsClass,'ad'=>$class]);
     }
 
 }

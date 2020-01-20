@@ -1,7 +1,7 @@
 <?php
 namespace Common\Model;
 use Common\Model\GoodsModel;
-
+use Common\Model\BrandModel;
 /**
  * 商品模型
  */
@@ -84,7 +84,27 @@ class GoodsClassModel extends BaseModel
             }
         return $second;
     }
+    /*
+    *khantminthu
+    */
+    public function getClass($data){
+        $field = ['id','class_name'];
+        $secondField = ['id','class_name','pic_url'];
+        $where['fid'] = $data['fid'];
+        $where['p_id'] = $data['p_id'];
+        $where['hide_status'] = 1;
+        $class = $this->where($where)->field($field)->select();
+        foreach ($class as $key => $value) {
+            $secondWhere['fid'] = $value['id'];
+            $secondWhere['hide_status'] = 1;
+            $secondClass = $this->where($secondWhere)->field($secondField)->select();
+            $brand = M('Brand')->where(['goods_class_id'=> $value['id'] , 'status'=>1])->field('brand_name,brand_logo')->select();
+            $class[$key]['detail'] = $secondClass;
+            $class[$key]['brand'] = $brand;
 
+        }
+        return $class;
+    }
 
     /**
      * 获取所有的一级分类ID
