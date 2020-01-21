@@ -59,10 +59,10 @@ class GoodsClassModel extends BaseModel
 
     public function getRecommendGoods($className){
         return  $this
-            ->where(
-                array( 'class_name' => "$className" )
-            )
-            ->getField( 'id' );
+        ->where(
+            array( 'class_name' => "$className" )
+        )
+        ->getField( 'id' );
     }
 
     /**
@@ -73,21 +73,21 @@ class GoodsClassModel extends BaseModel
         $firstfield = array('id', 'class_name');
         $field = array('id','class_name','pic_url');
             //得到二级
-            $secondWhere['fid'] = $fid;
-            $secondWhere['hide_status'] = 1;
-            $second = $this->where($secondWhere)->field($firstfield)->select();
-            foreach ($second as $keys =>$values){
-                $threeWhere['fid'] = $values['id'];
-                $threeWhere['hide_status'] = 1;
-                $three = $this->where($threeWhere)->field($field)->select();
-                $second[$keys]['three'] = $three;
-            }
+        $secondWhere['fid'] = $fid;
+        $secondWhere['hide_status'] = 1;
+        $second = $this->where($secondWhere)->field($firstfield)->select();
+        foreach ($second as $keys =>$values){
+            $threeWhere['fid'] = $values['id'];
+            $threeWhere['hide_status'] = 1;
+            $three = $this->where($threeWhere)->field($field)->select();
+            $second[$keys]['three'] = $three;
+        }
         return $second;
     }
     /*
     *khantminthu
     */
-    public function getClass($data){
+    public function getClass1($data){
         $field = ['id','class_name'];
         $secondField = ['id','class_name','pic_url'];
         $where['fid'] = $data['fid'];
@@ -104,6 +104,29 @@ class GoodsClassModel extends BaseModel
 
         }
         return $class;
+    }
+
+    public function getClass($data){
+
+        $img = M('nav_category')->where(['id'=>$data['pid']])->field('pic_url')->find();
+        $arr['img'] = $img['pic_url'];
+        $where['fid'] = $data['fid'];
+        $where['pid'] = $data['pid'];
+        $field = ['id','class_name'];
+        $secondField = ['id','class_name','pic_url'];
+        $classname = $this->where($where)->field('class_name')->find();
+        $arr['classname'] = $classname['class_name'];
+        $class = $this->where($where)->field('id')->select();
+        foreach ($class as $key => $value) {
+            $secondWhere['fid'] = $value['id'];
+            $secondWhere['hide_status'] = 1;
+            $secondClass = $this->where($secondWhere)->field($secondField)->select();
+            $brand = M('Brand')->where(['status'=>1])->field('brand_name,brand_logo')->select();
+        }
+        $arr['detail'] = $secondClass;
+        $arr['brand_name'] = $brand[0]['brand_name'];
+        $arr['brand'] = $brand;
+        return $arr;
     }
 
     /**

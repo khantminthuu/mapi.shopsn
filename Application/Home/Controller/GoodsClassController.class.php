@@ -63,9 +63,7 @@ class GoodsClassController
              /*This is check for data exit*/
 
              $ret = $this->logic->getClass();
-             echo "<pre>";
-             print_r($ret);
-             die;
+
              $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
 
              $this->objController->ajaxReturnData($ret);
@@ -73,19 +71,27 @@ class GoodsClassController
             $this->objController->ajaxReturnData("","0","请求失败");
         }
     }
+    public function getClassImg()
+    {
+        if(IS_GET){
+            $checkObj = new CheckParam($this->logic->getValidateByLogin(), $this->args);
+
+            $status = $checkObj->checkParam();
+
+            $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        }
+    }
     /*
         Tweltar Phyo Wai
     */
-        public function getNavCategory()
-    {
+        public function getNav(){
+           $ret = $this->logic->getNav();
 
-        $ret = $this->logic->getNavbar();
+           $this->objController->promptPjax($ret,$this->logic->getErrorMessage());
 
-        $this->objController->promptPjax($ret,$this->logic->getErrorMessage());
+           $this->objController->ajaxReturnData($ret);
+       }
 
-        $this->objController->ajaxReturnData($ret);
-
-    }
     /**
      * 获取三级分类下面的商品
      *

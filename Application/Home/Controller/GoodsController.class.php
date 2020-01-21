@@ -110,6 +110,9 @@ class GoodsController {
 		] );
 	}
 	
+	/*
+		#khantminthu
+	*/
 	
 	/**
 	 * 获取商品子类数据

@@ -28,6 +28,7 @@ class AnnouncementLogic extends AbstractGetDataLogic
               'required' => '消息ID必传',
            ],
         ];
+
         return $message;
     }
 

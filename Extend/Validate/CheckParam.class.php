@@ -174,25 +174,25 @@ class CheckParam {
 	public function checkParam() :bool
 	{
 		$message = $this->messageNotice;
-		
+
 		if (empty ( $message ) || empty ( $this->data )) {
 			$this->errorMessage = '请传递参数';
 			return false;
 		}
-		
+
 		$message = Event::insertObjectCallBack ( 'parperParam', $message );
-		
+
 		$result = false;
-		
+
 		foreach ( $message as $key => $value ) {
 			
 			if (! isset ( $this->data [$key] )) {
 				$this->errorMessage = '数据中不在键' . $key;
 				return false;
 			}
-			
+
 			$result = $this->paramCheckNotify ( $value, $key );
-			
+
 			if ($result === false) {
 				return false;
 			}

@@ -4,6 +4,7 @@ namespace Common\Logic;
 use Common\Model\GoodsClassModel;
 use Common\Model\GoodsModel;
 use Common\Model\UserModel;
+use Common\Model\NavCategoryModel;
 use Think\Cache;
 
 
@@ -22,6 +23,7 @@ class GoodsClassLogic extends AbstractGetDataLogic
         $this->splitKey = $split;
         $this->modelObj = new GoodsClassModel();
         $this->goodModel = new GoodsModel();
+        $this->navModel = new NavCategoryModel();
     }
     /**
      * 返回验证数据
@@ -69,16 +71,14 @@ class GoodsClassLogic extends AbstractGetDataLogic
     /*
         Tweltar Phyo Wai
     */
-      public function getNavbar(){
+      public function getNav(){
+            $getDetail = $this->navModel->getData();
+            if(empty($getDetail)){
+                return false;
+            }
+            return $getDetail;
+      }
 
-        $where['hide_status'] = 1;
-        $data = M('nav_category')->where($where)->field('id,title')->select();
-        foreach ($data as $key => $value){
-            $img = M('nav_category')->where(['id'=>$value['id'],'hide_status'=>1])->field('pic_url')->select();
-            $data[$key]['img'] = $img;
-        }
-        return $data;
-    }
     /**
      * 获取所有的一级分类ID
      *

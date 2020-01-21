@@ -104,7 +104,7 @@ class Event
             $classRef = new \ReflectionObject($obj);
            
             $data = $classRef->getMethod(self::$classPluin[$name]['operator'])->invoke($obj, $args);
-            
+
         } catch (\Exception $e) {
             
             throw $e;
