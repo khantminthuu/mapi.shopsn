@@ -63,7 +63,7 @@ class GoodsLogic extends AbstractGetDataLogic
             GoodsModel::$title_d,
         ];
     }
-	
+
     /**
      * 验证 参数获取一级分类下面的商品
      */
@@ -82,8 +82,8 @@ class GoodsLogic extends AbstractGetDataLogic
      /**
      * 验证
      */
-    public function getAttrValidateByLogin()
-    {
+     public function getAttrValidateByLogin()
+     {
         $message = [
             'id' => [
                 'required' => '商品ID必传',
@@ -95,10 +95,10 @@ class GoodsLogic extends AbstractGetDataLogic
     public function getValidateByDetail() {
         $message = [ 
             'id' => [ 
-                    'number' => '商品Id参数必须' 
+                'number' => '商品Id参数必须' 
             ],
             'goods_num' => [ 
-                    'number' => '商品数量参数必须' 
+                'number' => '商品数量参数必须' 
             ],
         ];
         return $message;
@@ -172,7 +172,7 @@ class GoodsLogic extends AbstractGetDataLogic
         $data['totalPages'] =  $totalPages;
         return array("status"=>1,"message"=>"获取成功!","data"=>$data);
     }
-   
+
     /**
      * 搜索店铺或者商品
      */
@@ -215,11 +215,11 @@ class GoodsLogic extends AbstractGetDataLogic
     	if (empty($pId)) {
     		return null;
     	}
-       
+
     	$cache->set($key, $pId);
-        
+
         return $pId;
-      
+
     }
 
 
@@ -229,38 +229,38 @@ class GoodsLogic extends AbstractGetDataLogic
      * @param int $pId 商品父级编号
      * @return array
      */
-    public function getChildrenGoods()
-    {  
-    	$pId = $this->data['id'];
-    	
-    	if( !is_numeric( $pId ) ){
-    		return array();
-    	}
-    	
-    	$cache = Cache::getInstance('', ['expire' => 30]);
+     public function getChildrenGoods()
+     {  
+         $pId = $this->data['id'];
+
+         if( !is_numeric( $pId ) ){
+          return array();
+      }
+
+      $cache = Cache::getInstance('', ['expire' => 30]);
 //    	$pId = $this->getGoodsChildrenById();
-    	$key = $this->data['id'].'_kjd';
-    	$data = $cache->get($key);
-    	if(empty($data)) {
-    		$field = [
-    				GoodsModel::$id_d,
-    				GoodsModel::$title_d,
-    				GoodsModel::$brandId_d,
-    				GoodsModel::$pId_d,
-    				GoodsModel::$description_d,
-    				GoodsModel::$classId_d,
-    				GoodsModel::$priceMarket_d,
-    				GoodsModel::$priceMember_d,
-    		];
-    		$data = $this->modelObj->field( $field )->where( GoodsModel::$pId_d . '= %d and ' . GoodsModel::$shelves_d . '= 1 and '.GoodsModel::$approvalStatus_d.' = 1', $pId )->select();
-    		
-    	} else {
-    		return $data;
-    	}
-    	$cache->set($key, $data);
-    	return $data;
-    }
-    
+      $key = $this->data['id'].'_kjd';
+      $data = $cache->get($key);
+      if(empty($data)) {
+          $field = [
+            GoodsModel::$id_d,
+            GoodsModel::$title_d,
+            GoodsModel::$brandId_d,
+            GoodsModel::$pId_d,
+            GoodsModel::$description_d,
+            GoodsModel::$classId_d,
+            GoodsModel::$priceMarket_d,
+            GoodsModel::$priceMember_d,
+        ];
+        $data = $this->modelObj->field( $field )->where( GoodsModel::$pId_d . '= %d and ' . GoodsModel::$shelves_d . '= 1 and '.GoodsModel::$approvalStatus_d.' = 1', $pId )->select();
+
+    } else {
+      return $data;
+  }
+  $cache->set($key, $data);
+  return $data;
+}
+
     /**
      * 获取子类商品【上架的】
      * @param int $pId 商品父级编号
@@ -292,7 +292,7 @@ class GoodsLogic extends AbstractGetDataLogic
             GoodsModel::$id_d => $this->data[GoodsModel::$id_d],
         ];
         $this->searchField ='id,brand_id,store_id,title,price_market,price_member,stock,selling,class_id,recommend,
-            code,top,season_hot,description,goods_type,status,p_id,store_id';
+        code,top,season_hot,description,goods_type,status,p_id,store_id';
         $retData = parent::getFindOne();
         if (empty($retData)){
             $this->errorMessage = '暂无数据';
@@ -320,7 +320,7 @@ class GoodsLogic extends AbstractGetDataLogic
     	$userId = SessionGet::getInstance('user_id')->get();
     	
     	$tmp = $userId ? $userId : '0' ;
-        
+
     	$key = $this->splitKey.'_'.$this->data[$this->splitKey].'_'.$tmp;
     	
     	$data = $cache->get($key);
@@ -343,22 +343,22 @@ class GoodsLogic extends AbstractGetDataLogic
     	];
     	
     	$data = $this->modelObj
-    		->field($field)
-    		->where(GoodsModel::$id_d.'=:id')
-    		->bind([':id' => $this->data[$this->splitKey]])
-    		->find();
-    	
-    	if (empty($data)) {
-    		$this->errorMessage = '没有该商品';
-    		return [];
-    	}
-    	
-    	$cache->set($key, $data);
-    	
-    	return $data;
-    		
-    }
-   	
+      ->field($field)
+      ->where(GoodsModel::$id_d.'=:id')
+      ->bind([':id' => $this->data[$this->splitKey]])
+      ->find();
+
+      if (empty($data)) {
+          $this->errorMessage = '没有该商品';
+          return [];
+      }
+
+      $cache->set($key, $data);
+
+      return $data;
+
+  }
+
     /**
      * 支付处理
      */
@@ -373,7 +373,7 @@ class GoodsLogic extends AbstractGetDataLogic
     	
     	return $data;
     }
-   
+
     //商品搜索
     public function searchGoods(){
         $post = $this->data;
@@ -529,7 +529,7 @@ class GoodsLogic extends AbstractGetDataLogic
     public function checkStock()
     {
     	$data = $this->getStock();
-		
+
     	if (empty($data)) {
     		return [];
     	}
@@ -551,27 +551,27 @@ class GoodsLogic extends AbstractGetDataLogic
     /**
      * 再次购买验证库存
      */
-  	public function orderBuyAgainCheckStock()
-  	{
-  		$data = $this->getStock();
-  		
-  		if (empty($data)) {
-  			return [];
-  		}
-  		
-  		foreach ($data as $key => $value) {
-  			
-  			if ($value[GoodsModel::$stock_d] >= $this->data[$key]['goods_num']) {
-  				continue;
-  			}
-  			
-  			$this->errorMessage = $value[GoodsModel::$title_d].'库存不足';
-  			
-  			return false;
-  		}
-  		return true;
-  	}
-    
+    public function orderBuyAgainCheckStock()
+    {
+        $data = $this->getStock();
+
+        if (empty($data)) {
+         return [];
+     }
+
+     foreach ($data as $key => $value) {
+
+         if ($value[GoodsModel::$stock_d] >= $this->data[$key]['goods_num']) {
+          continue;
+      }
+
+      $this->errorMessage = $value[GoodsModel::$title_d].'库存不足';
+
+      return false;
+  }
+  return true;
+}
+
     /**
      * 获取库存
      */
@@ -582,16 +582,16 @@ class GoodsLogic extends AbstractGetDataLogic
     	$goodsId = implode(',', array_keys($data));
     	
     	$goods = $this->modelObj
-    		->where(GoodsModel::$id_d.' in (%s)', $goodsId)
-    		->getField(GoodsModel::$id_d.','.GoodsModel::$stock_d.','.GoodsModel::$title_d);
-    	
-    	if (empty($goods)) {
-    		return [];
-    	}
-    	
-    	return $goods;
-    }
-    
+      ->where(GoodsModel::$id_d.' in (%s)', $goodsId)
+      ->getField(GoodsModel::$id_d.','.GoodsModel::$stock_d.','.GoodsModel::$title_d);
+
+      if (empty($goods)) {
+          return [];
+      }
+
+      return $goods;
+  }
+
     /**
      * 验证库存是否足够
      */
@@ -603,13 +603,13 @@ class GoodsLogic extends AbstractGetDataLogic
     		$this->errorMessage = '商品异常';
     		return false;
     	}
-    		
+
     	if ($data[$this->data['goods_id']] >= $this->data['goods_num']) {
     		return true;
     	}
-    		
+
     	$this->errorMessage = '库存不足';
-    		
+
     	return false;
     }
     
@@ -621,14 +621,14 @@ class GoodsLogic extends AbstractGetDataLogic
     	$goodsId = $this->data['goods_id'];
     	
     	$goods = $this->modelObj
-	    	->where(GoodsModel::$id_d.' = %d', $goodsId)
-	    	->getField(GoodsModel::$id_d.','.GoodsModel::$stock_d);
-    	if (empty($goods)) {
-    		return [];
-    	}
-    	return $goods;
-    }
-    
+      ->where(GoodsModel::$id_d.' = %d', $goodsId)
+      ->getField(GoodsModel::$id_d.','.GoodsModel::$stock_d);
+      if (empty($goods)) {
+          return [];
+      }
+      return $goods;
+  }
+
     /**
      * 得到一级分类下所有的商品
      * author 王波
@@ -640,8 +640,8 @@ class GoodsLogic extends AbstractGetDataLogic
             GoodsModel::$classId_d => $this->data["id"],
             GoodsModel::$approvalStatus_d => '1',
             GoodsModel::$pId_d => '0',
-        	GoodsModel::$shelves_d => '1',
-        	GoodsModel::$status_d => '0',
+            GoodsModel::$shelves_d => '1',
+            GoodsModel::$status_d => '0',
         ];
 //        $p_id = $this->modelObj->where($where)->field("id")->select();
 //        if(empty($p_id)){
@@ -713,7 +713,7 @@ class GoodsLogic extends AbstractGetDataLogic
     		GoodsModel::$classTwo_d,
     		GoodsModel::$shelves_d,            //直接访问下架商品需要参数     meng
             GoodsModel::$picUrl_d
-    	];
+        ];
     }
     
     /**
@@ -723,19 +723,19 @@ class GoodsLogic extends AbstractGetDataLogic
     public function getGoodsDetailById() :array
     {
     	$data = $this->modelObj
-    		->field($this->getTableColum())
-    		->where(GoodsModel::$id_d.'=:id and '.GoodsModel::$shelves_d.' = 1 and '.GoodsModel::$approvalStatus_d.' = 1')
+      ->field($this->getTableColum())
+      ->where(GoodsModel::$id_d.'=:id and '.GoodsModel::$shelves_d.' = 1 and '.GoodsModel::$approvalStatus_d.' = 1')
 //    		->where(GoodsModel::$id_d.'=:id and '.GoodsModel::$approvalStatus_d.' = 1')
-    		->bind([':id' => [$this->data['id'], \PDO::PARAM_INT]])
-    		->find();
-    	
-    	if (empty($data)) {
-    		$this->errorMessage = '商品信息错误';
-    		return [];
-    	}
-    	return $data;
-    }
-    
+      ->bind([':id' => [$this->data['id'], \PDO::PARAM_INT]])
+      ->find();
+
+      if (empty($data)) {
+          $this->errorMessage = '商品信息错误';
+          return [];
+      }
+      return $data;
+  }
+
     /**
      * 获取商品详情
      * @return array
@@ -762,21 +762,63 @@ class GoodsLogic extends AbstractGetDataLogic
     	
     	return $data;
     }
-    
+
+    /*
+        khantminthu
+    */
+        public function getGoodDetail()    :array
+        {
+           $key = 'goods_detail'.$this->data['id'];
+
+           $cache = Cache::getInstance('',['exprie'=>60]);
+
+           $data = $cache->get($key);       //bool
+
+           if(!empty($data)){
+            return $data;
+        }
+        // $data = $this->getGoodsDetail();
+        $data = $this->modelObj->getGoodsDetail($this->data);
+        if(empty($data)){
+            $this->errorMessage = '没有找到这个商品任何信息';
+            return [];
+        }
+        $cache->set($key,$data);
+        return $data;
+    }
+
+
+    public function getGoodsDetail()    :array
+    {
+        $data = $this->modelObj
+        ->field($this->getTableColum())
+        ->where(GoodsModel::$id_d.'=:id and '.GoodsModel::$shelves_d.' = 1 and '.GoodsModel::$approvalStatus_d.' = 1')
+        ->bind([':id' => [$this->data['id'] , \PDO::PARAM_INT]])
+        ->find();
+        
+        if(empty($data)){
+            $this->errorMessage = '商品信息错误';
+            return [];
+        }
+        // $cache->set($key, $data);
+        
+        return $data;
+    }
+
     //获取商品详情
     public function getGoodsDetailByOrder() :array
     { 
         $data = $this->getGoodsDetailCache();
-        
+
         if (empty($data)) {
-        	return [];
-        }
-        
-        unset($data[GoodsModel::$priceMarket_d]);
-        
-        return $data;
-    }
-    
+         return [];
+     }
+
+     unset($data[GoodsModel::$priceMarket_d]);
+
+     return $data;
+ }
+
     /**
      * 推荐分类的商品
      * @return []
@@ -831,10 +873,10 @@ class GoodsLogic extends AbstractGetDataLogic
         if(empty($goods)){
             return [];
         }
-    	
+
 //    	$cache->set($key, $goods);
-    	
-    	return $goods;
+
+        return $goods;
     }
     
     public function getSplitKeyByPId():string
@@ -917,22 +959,22 @@ class GoodsLogic extends AbstractGetDataLogic
 //    	ORDER BY a1.id , b1.id  DESC
 //		Limit 4;
 //aaa;
-     	$data = $this->modelObj->alias('a1')
-            ->join('left join db_goods_images as b on b.goods_id = a1.id')
-            ->field($field)
-            ->where(['a1.shelves'=>1,'a1.approval_status'=>1,'a1.store_id'=>$this->data['store_id'],'is_thumb'=>1])
-            ->limit(4)
-            ->select();
+      $data = $this->modelObj->alias('a1')
+      ->join('left join db_goods_images as b on b.goods_id = a1.id')
+      ->field($field)
+      ->where(['a1.shelves'=>1,'a1.approval_status'=>1,'a1.store_id'=>$this->data['store_id'],'is_thumb'=>1])
+      ->limit(4)
+      ->select();
 
-    	if (empty($data)) {
-    		$this->errorMessage = '没有数据';
-    		return [];
-    	}
-    	
-    	$cache->set($key, $data);
-    	
-    	return $data;
-    }
+      if (empty($data)) {
+          $this->errorMessage = '没有数据';
+          return [];
+      }
+
+      $cache->set($key, $data);
+
+      return $data;
+  }
     /**
      * 获取 商品数据
      * @return array
@@ -952,7 +994,7 @@ class GoodsLogic extends AbstractGetDataLogic
     	}
     	
     	$data = $this->getGoodsByOtherData();
-    
+
     	if (empty($data)) {
     		$this->errorMessage = '找不到对应的商品';
     		return [];
@@ -1035,22 +1077,22 @@ class GoodsLogic extends AbstractGetDataLogic
     * 套餐购物车购买兼容支付数据
     * @return array
     */
-    public function getParseDataCartByOrder() :array
-    {
-    	$goodsData = $this->getGoodsForData();
-    	
-    	if (empty($goodsData)) {
-    		return [];
-    	}
-    	
-    	foreach ($goodsData as & $value) {
-    		$value['goods_num'] = $value['package_num'];
-    	}
-    	
-    	return $goodsData;
-    }
-    
-    
+   public function getParseDataCartByOrder() :array
+   {
+     $goodsData = $this->getGoodsForData();
+
+     if (empty($goodsData)) {
+      return [];
+  }
+
+  foreach ($goodsData as & $value) {
+      $value['goods_num'] = $value['package_num'];
+  }
+
+  return $goodsData;
+}
+
+
     /**
      * 获取猜你喜欢商品（未登录时猜你喜欢）
      * @return array
@@ -1060,7 +1102,7 @@ class GoodsLogic extends AbstractGetDataLogic
     	if (!isset($_COOKIE['brand_id'])) {
     		return [];
     	}
-		
+
     	$brandIdArray = json_decode($_COOKIE['brand_id'], true);
     	
     	$classIdArray = json_decode($_COOKIE['class_id'], true);
@@ -1084,50 +1126,50 @@ class GoodsLogic extends AbstractGetDataLogic
     	$pageNumber = ($this->data['page'] - 1) * $pageSize;
     	
     	$data = $this->modelObj
-	    	->field($field)
-	    	->where('('.GoodsModel::$brandId_d.' between :min_g and :max_g) or ('.GoodsModel::$classTwo_d.' between :min_c and :max_c)')
-	    	->bind([':min_g' => $minBrandId, ':max_g' => $maxBrandId, ':min_c' => $minClassId, ':max_c' => $maxClassId])
-	    	->order(GoodsModel::$salesSum_d. ' DESC ')
-	    	->limit($pageNumber, $pageSize)
-    		->select();
-    	
-    	if (empty($data)) {
-    		return [];
-    	}
-		
-    	foreach ($data as $key => $value) {
-    		if ($value[GoodsModel::$pId_d] == 0) {
-    			unset($data[$key]);
-    		}
-    	}
-    	
-    	if (empty($data)) {
-    		return [];
-    	}
-    	$goods = [];
-    	
-    	
-    	$compare = false;
-    	
+      ->field($field)
+      ->where('('.GoodsModel::$brandId_d.' between :min_g and :max_g) or ('.GoodsModel::$classTwo_d.' between :min_c and :max_c)')
+      ->bind([':min_g' => $minBrandId, ':max_g' => $maxBrandId, ':min_c' => $minClassId, ':max_c' => $maxClassId])
+      ->order(GoodsModel::$salesSum_d. ' DESC ')
+      ->limit($pageNumber, $pageSize)
+      ->select();
+
+      if (empty($data)) {
+          return [];
+      }
+
+      foreach ($data as $key => $value) {
+          if ($value[GoodsModel::$pId_d] == 0) {
+           unset($data[$key]);
+       }
+   }
+
+   if (empty($data)) {
+      return [];
+  }
+  $goods = [];
+
+
+  $compare = false;
+
     	//只显示 同类商品销量最高的一个
-    	foreach ($data as $key => $value) {
-    		
-    		if (isset($goods[$value[GoodsModel::$pId_d]])) {
-    			
-    			$compare = $goods[$value[GoodsModel::$pId_d]][GoodsModel::$salesSum_d] < $value[GoodsModel::$salesSum_d];
-    			
+  foreach ($data as $key => $value) {
+
+      if (isset($goods[$value[GoodsModel::$pId_d]])) {
+
+       $compare = $goods[$value[GoodsModel::$pId_d]][GoodsModel::$salesSum_d] < $value[GoodsModel::$salesSum_d];
+
     			//大于
-    			if ($compare === true) {
-    				$goods[$value[GoodsModel::$pId_d]] = $value;
-    			}
-    			
-    		}else {
-    			$goods[$value[GoodsModel::$pId_d]] = $value;
-    		}
-    	}
-    	return array_values($goods);
+       if ($compare === true) {
+        $goods[$value[GoodsModel::$pId_d]] = $value;
     }
-    
+
+}else {
+   $goods[$value[GoodsModel::$pId_d]] = $value;
+}
+}
+return array_values($goods);
+}
+
     /**
      * 根据评分获取商品
      */
@@ -1148,14 +1190,14 @@ class GoodsLogic extends AbstractGetDataLogic
     	$pageNumber = ($args['page'] - 1) * $pageSize;
     	
     	$data = $this->modelObj
-    		->field($this->getTableColum())
-    		->where(GoodsModel::$id_d .' in (%s) and '.GoodsModel::$approvalStatus_d.' = 1 and '.GoodsModel::$shelves_d.' = 1', $goodsIdString)
-    		->order(GoodsModel::$salesSum_d.' DESC ')
-    		->limit($pageNumber, $pageSize)
-    		->select();
-    	return $data;
-    }
-    
+      ->field($this->getTableColum())
+      ->where(GoodsModel::$id_d .' in (%s) and '.GoodsModel::$approvalStatus_d.' = 1 and '.GoodsModel::$shelves_d.' = 1', $goodsIdString)
+      ->order(GoodsModel::$salesSum_d.' DESC ')
+      ->limit($pageNumber, $pageSize)
+      ->select();
+      return $data;
+  }
+
     /**
      * 获取推荐商品并缓存
      */
@@ -1190,26 +1232,26 @@ class GoodsLogic extends AbstractGetDataLogic
     	$field = $this->getTableColum();
     	
     	$data = $this->modelObj
-    		->field($field)
-    		->where(GoodsModel::$id_d.' in (%s) and '.GoodsModel::$approvalStatus_d.' = 1 and '.GoodsModel::$shelves_d.' = 1', $id)
-    		->select();
-    	
-    	if (empty($data)) {
-    		$this->errorMessage = '商品数据错误';
-    		return [];
-    	}
-    	
-    	foreach ($data as & $value) {
-    		$value['goods_num'] = '1';
-    		
+      ->field($field)
+      ->where(GoodsModel::$id_d.' in (%s) and '.GoodsModel::$approvalStatus_d.' = 1 and '.GoodsModel::$shelves_d.' = 1', $id)
+      ->select();
+
+      if (empty($data)) {
+          $this->errorMessage = '商品数据错误';
+          return [];
+      }
+
+      foreach ($data as & $value) {
+          $value['goods_num'] = '1';
+
     		//兼容订单商品添加
-    		$value['goods_id'] = $value[GoodsModel::$id_d];
-    	}
-    	
-    	return $data;
-    	
-    }
-    
+          $value['goods_id'] = $value[GoodsModel::$id_d];
+      }
+
+      return $data;
+
+  }
+
     /**
      * 最佳配件商品立即购买缓存
      */

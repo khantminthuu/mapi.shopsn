@@ -19,6 +19,9 @@ class NewsModel extends BaseModel
 
 	public static $userId_d;	//用户id
 
+
+	public static $status_d;	//0消息未读，1消息已读
+
     private static $obj;
     public static function getInitnation()
     {

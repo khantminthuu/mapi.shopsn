@@ -789,7 +789,6 @@ abstract class AbstractGetDataLogic
     public function checkIdIsNumric() :bool
     {
         $model = & $this->modelObj;
-
         if (!empty($this->data) && is_numeric($this->data[$model::$id_d])) {
             return true;
         }
