@@ -22,4 +22,19 @@ class UserHeaderModel extends BaseModel
         $class = __CLASS__;
         return self::$obj = !( self::$obj instanceof $class ) ? new self() : self::$obj;
     }
+
+    public static function getUserDetail($arr)
+    {
+    	foreach ($arr as $key => $value) {
+    		$user = M('user')->where(['id'=>$value['user_id']])->field('user_name')->find();
+    		$userDeatil = M('user_header')->where(['user_id'=>$value['user_id']])->field('user_header')->find();
+    		$img = M('review_images')->where(['user_id'=>$value['user_id']])->field('img_url')->select();
+    		$arr[$key]['username'] = $user['user_name'];
+    		$arr[$key]['userheader'] = $userDeatil['user_header'];
+    		$arr[$key]['img'] = $img;
+    	}
+    	return $arr;
+    	
+    }
+    
 }
