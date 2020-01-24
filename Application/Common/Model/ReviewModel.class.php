@@ -27,11 +27,14 @@ class ReviewModel extends  BaseModel
 	public function getModel($arr)
 	{
 		$where['goods_id'] = $arr['id'];
+
 		$totalReviews = $this->where($where)->count();
+
 		$reviews = $this->where($where)->field('rating')->select();
+
 		$ratingCalc = $this->calRating($reviews);
-		
 	}
+
 	public function calRating1($data)
 	{
 		foreach ($data as $key => $value) {
