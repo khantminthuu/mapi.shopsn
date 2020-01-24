@@ -22,7 +22,6 @@ class StoreController
     {
         $this->args = $args;
         $this->init();  
-        
         $this->logic = new StoreLogic($args);
         $this->goodsClassLogic = new GoodsClassLogic($args);
         $this->goods = new GoodsLogic($args);

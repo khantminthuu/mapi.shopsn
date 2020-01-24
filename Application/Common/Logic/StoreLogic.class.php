@@ -52,9 +52,7 @@ class StoreLogic extends AbstractGetDataLogic
     public function getValidateByLogin()
     {
         $message = [
-            'id' => [
-                'number' => '必须传入店铺ID',
-            ]
+            'id' => ['number' => '必须传入店铺ID']
         ];
         return $message;
     }
