@@ -13,8 +13,6 @@ class GoodsModel extends BaseModel
 
     private static $obj;
 
-
-
 	public static $id_d;	//主键编号
 
 	public static $brandId_d;	//品牌【编号】

@@ -61,24 +61,26 @@ class GoodsController {
 		//移除全部与订单相关的session
 		SessionManager::REMOVE_ALL();
 	}
-	
+
+
 	/**
-	 * 获取商品详情
+	 * Get product details
 	 */
-	public function goodInfo() :void
+	public function goodInfo1() :void
 	{
 		$this->objController->promptPjax ( $this->logic->checkIdIsNumric(), $this->logic->getErrorMessage () );
 		
 		$ret = $this->logic->getGoodsDetailCache();
 
 		$this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
-		
-		//获取商品图片
+
+
+		//Get product image
 		$goodsImageLogic = new GoodsImagesLogic($ret, $this->logic->getSplitKeyByPId());
 		
 		$image = $goodsImageLogic->getGoodImageCache();
 		
-		// 未登录时猜你喜欢
+		// Guess you like when not logged in
 		$brandId = isset($_COOKIE['brand_id']) ?  json_decode($_COOKIE['brand_id'], true) : [];
 		
 		$classId = isset($_COOKIE['class_id']) ?  json_decode($_COOKIE['class_id'], true) : [] ;
@@ -109,6 +111,40 @@ class GoodsController {
 			'images' => $image
 		] );
 	}
+
+    /*
+       Tweltar
+    */
+    public function goodInfo() : void
+    {
+        $this->objController->promptPjax($this->logic->checkIdIsNumric(),$this->logic->getErrorMessage());
+
+        $ret = $this->logic->getGoodsDetailCache();
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	/*
 		#khantminthu
