@@ -27,10 +27,9 @@ class ReviewController
 
 		$this->objController->promptPjax($ret , $this->logic->getErrorMessage());
 
-		
-
-		var_dump($userId);
+		$this->objController->ajaxReturnData($ret);
 	}
+
 	public function mo()
 	{
 		$number = 100;
