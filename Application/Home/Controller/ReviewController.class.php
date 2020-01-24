@@ -35,7 +35,6 @@ class ReviewController
 	{
 		$number = 100;
 		for ($num=0; $num < $number ; $num++) { 
-			echo "tweltar ";
 		}
 	}
 	

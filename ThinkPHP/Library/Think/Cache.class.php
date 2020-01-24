@@ -52,6 +52,7 @@ class Cache {
      * @return mixed
      */
     static function getInstance($type='',$options=array()) {
+        //$options = ['expire'=>60]
 		static $_instance	=	array();
         $options_array = array();
         if(isset($options['type'])){
@@ -63,7 +64,9 @@ class Cache {
         if(isset($options['port'])){
             $options_array['port'] = $options['port'];
         }
+
         $guid    =    $type.to_guid_string($options_array);
+
 		if(!isset($_instance[$guid])){
 			$obj	=	new Cache();
 			$_instance[$guid]	=	$obj->connect($type,$options);

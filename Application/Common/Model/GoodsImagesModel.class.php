@@ -70,5 +70,19 @@ class GoodsImagesModel extends BaseModel
         return $goods;
     }
 
+    /*
+        khantminthu
+    */
+    public function getImage($data , $splite='')
+    {
+        $where['goods_id'] = empty($data['p_id'])?$data[$splite]:$data['p_id'];
+        $where['is_thumb'] = 0;
+        $field = 'pic_url';
+
+        $images = $this->where($where)->field($field)->limit(4)->select();
+        
+        return $images;
+    }
+
 
 }

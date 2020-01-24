@@ -12,9 +12,9 @@ class UserHeaderModel extends BaseModel
 
 	public static $id_d;	//id
 
-	public static $userId_d;	//用户id
+	public static $userId_d;	//User Id
 
-	public static $userHeader_d;	//头像
+	public static $userHeader_d;	//Avatar
 
 
     public static function getInitnation()

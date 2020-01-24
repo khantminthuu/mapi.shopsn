@@ -22,6 +22,7 @@ class GoodsImagesLogic extends AbstractGetDataLogic
     public function __construct(array $data = [], $split = '', array $clientValue = [])
     {
         $this->data = $data;
+
         $this->splitKey = $split;
         
         $this->clientValue = $clientValue;
@@ -309,17 +310,7 @@ class GoodsImagesLogic extends AbstractGetDataLogic
     	return $data;
     }
     
-    /**
-     * 获取商品详情图片
-     */
-    public function getGoodImage()
-    {
-        $where['goods_id'] = empty($this->data['p_id'])?$this->data[$this->splitKey]:$this->data['p_id'];
-    	$where['is_thumb'] = '0';
-    	$field = 'pic_url';
-    	$images = $this->modelObj->where($where)->field($field)->limit(4)->select();
-    	return $images;
-    }
+    
     
     /**
      * 获取图片并缓存
@@ -346,5 +337,44 @@ class GoodsImagesLogic extends AbstractGetDataLogic
     	$cache->set($key, $data);
     	
     	return $data;
+    }
+
+    /*
+        khantminthu
+    */
+    public function getGoodsImage()
+    {
+        #$this->data = $ret;
+        #$this->spliteKey = id;
+        $key = $this->data[$this->splitKey].'$goods_image_cb';
+        #$key = 117$goods_image_cb
+
+        $cache = Cache::getInstance('',['expire'=>60]);
+
+        $data = $cache->get($key);
+
+        if(!empty($data)){
+            return $data;
+        }
+        // $data = $this->getGoodImage();
+        $data =  $this->modelObj->getImage($this->data,$this->splitKey);
+        
+        if(empty($data)){
+            return [];
+        }
+        $cache->set($key,$data);
+        return $data;
+
+    }
+    /**
+     * 获取商品详情图片
+     */
+    public function getGoodImage()
+    {
+        $where['goods_id'] = empty($this->data['p_id'])?$this->data[$this->splitKey]:$this->data['p_id'];
+        $where['is_thumb'] = '0';
+        $field = 'pic_url';
+        $images = $this->modelObj->where($where)->field($field)->limit(4)->select();
+        return $images;
     }
 }

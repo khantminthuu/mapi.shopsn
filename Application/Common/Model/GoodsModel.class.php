@@ -460,4 +460,16 @@ class GoodsModel extends BaseModel
         $data['title'] = $goods['title'];
         return $data;
     }
+    /*
+        khantminthu
+    */
+    public function getGoodsDetail($id){
+        // $field = 'id,title,pId,storeId,stock,expressId,weight,description,priceMarket,priceMember,commentMember,salesSum,brandId,classTwo,shelves,picUrl';
+        $field = 'id,title,p_id,store_id,stock,express_id,weight,description,price_market,price_member,comment_member,sales_sum,brand_id,class_two,shelves,pic_url';
+        $where['id'] = $id['id'];
+        $where['shelves'] = 1;
+        $where['approval_status'] = 1;
+        $getGoodsArr = $this->where($where)->field($field)->find();
+        return $getGoodsArr;
+    }
 }

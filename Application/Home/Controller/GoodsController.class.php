@@ -70,7 +70,7 @@ class GoodsController {
 		$this->objController->promptPjax ( $this->logic->checkIdIsNumric(), $this->logic->getErrorMessage () );
 		
 		$ret = $this->logic->getGoodsDetailCache();
-		
+
 		$this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
 		
 		//获取商品图片
@@ -113,7 +113,49 @@ class GoodsController {
 	/*
 		#khantminthu
 	*/
-	
+	public function goodsInfo()	:void
+	{
+		$this->objController -> promptPjax( $this->logic->checkIdIsNumric() ,$this->logic->getErrorMessage());	//get array is numeric?
+
+		$ret = $this->logic->getGoodDetail();
+
+		$this->objController->promptPjax($ret , $this->logic->getErrorMessage());
+
+		$goodsImageLogic = new GoodsImagesLogic($ret , $this->logic->getSplitKeyByPId());
+		# $this->logic->getSplitKeyByPId() = str id;
+
+		$image = $goodsImageLogic->getGoodsImage();
+
+		$brandId = isset($_COOKIE['brand_id'])?json_decode($_COOKIE['brand_id'],true) :[];
+
+		$classId = isset($_COOKIE['class_id'])?json_decode($_COOKIE['class_id'],true):[];
+
+		$classId[] = $ret['class_two'];
+
+		$classId[] = $ret['brand_id'];
+
+		$time = time()+3600*4;		//time is 4 days;
+
+		$cookieDomin = C('COOKIE_DOMAIN');		//from config
+
+		setcookie('brand_id' , json_encode(array_unique($brandId),JSON_UNESCAPED_UNICODE),$time,'/',$cookieDomin);
+		
+		setcookie('class_id' , json_encode(array_unique($classId),JSON_UNESCAPED_UNICODE),$time,'/',$cookieDomin);
+
+		$userId = SessionGet::getInstance('user_id')->get();
+
+		if($userId){
+
+			$footPrint = new FootPrintLogic($ret);
+
+			$footPrint->addData();
+		}
+
+		$this->objController->ajaxReturnData ( [
+			'goods' => $ret,
+			'images' => $image
+		] );
+	}	
 	/**
 	 * 获取商品子类数据
 	 * 
