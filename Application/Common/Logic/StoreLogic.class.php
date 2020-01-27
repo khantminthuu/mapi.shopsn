@@ -145,15 +145,16 @@ class StoreLogic extends AbstractGetDataLogic
         ];
     }
     /**
-     * 获取商品归属店铺基本信息
+     * Get basic information about the store where the product belongs
      *
      */
     public function getShopInfo(){
         $this->searchTemporary = [
             StoreModel::$id_d => $this->data['id'],
+
         ];
         $retData = parent::getFindOne();
-        //获取店铺所有宝贝数量
+        //Get all the treasures in the shop
         $retData['goodsNumber'] = $this->goodModel->getShopGoodNumber($this->data['id']);
         if (empty($retData)){
             $this->errorMessage = '暂无数据';
@@ -161,6 +162,14 @@ class StoreLogic extends AbstractGetDataLogic
         }
         return $retData;
     }
+
+    /**
+     Tweltar
+
+     */
+
+
+
 	
     /**
      * 
@@ -521,6 +530,8 @@ class StoreLogic extends AbstractGetDataLogic
     		
     		$this->modelObj->rollback();
     		return false;
+
+
     	}
     	
     	return false;

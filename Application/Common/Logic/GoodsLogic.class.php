@@ -740,7 +740,7 @@ class GoodsLogic extends AbstractGetDataLogic
      * 获取商品详情
      * @return array
      */
-    public function getGoodsDetailCache1() :array
+    public function getGoodsDetailCache() :array
     {
     	$key = 'goods_detail'.$this->data['id'];
     	
@@ -769,29 +769,29 @@ class GoodsLogic extends AbstractGetDataLogic
 
      */
 
-      public function getGoodsDetailCache():array
-      {
-        $key = 'goods_detail'.$this->data['id'];
-
-        $cache = Cache::getInstance('',['expire'=>60]);
-
-        $data = $cache->get($key);
-
-        if(!empty($data)){
-            return $data;
-        }
-
-        $data = $this->getGoodsDetailById();
-        if(empty($data)){
-            $this->errorMessage = 'No information found for this product';
-            return [];
-        }
-
-        $cache->set($key,$data);
-
-        return $data;
-
-      }
+//      public function getGoodsDetailCache():array
+//      {
+//        $key = 'goods_detail'.$this->data['id'];
+//
+//        $cache = Cache::getInstance('',['expire'=>60]);
+//
+//        $data = $cache->get($key);
+//
+//        if(!empty($data)){
+//            return $data;
+//        }
+//
+//        $data = $this->getGoodsDetailById();
+//        if(empty($data)){
+//            $this->errorMessage = 'No information found for this product';
+//            return [];
+//        }
+//
+//        $cache->set($key,$data);
+//
+//        return $data;
+//
+//      }
 
 
 

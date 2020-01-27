@@ -227,7 +227,7 @@ class StoreController
     }
 	
     /**
-     * 获取商品店铺信息
+     * Get product store information
      *
      */
     public function shopInfo() 
@@ -239,11 +239,27 @@ class StoreController
     	$this->objController->promptPjax ( $status, $checkObj->getErrorMessage () );
     		
     	$ret = $this->logic->getShopInfo ();
-    		
+
     	$this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
     		
     	$this->objController->ajaxReturnData ( $ret );
     }
+    /**
+     * Tweltar
+     *
+     */
+    public function shopInfo1()
+    {
+        $ret = $this->logic->getShopInfo1();
+
+        $this->objController->promptPjax($ret,$this->logic->getErrorMessage());
+
+        $this->objController->ajaxReturnData($ret);
+
+
+    }
+
+
     /**
      * 获取店铺证照信息
      * @author 王波

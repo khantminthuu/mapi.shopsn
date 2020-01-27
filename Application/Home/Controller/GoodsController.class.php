@@ -66,7 +66,7 @@ class GoodsController {
 	/**
 	 * Get product details
 	 */
-	public function goodInfo1() :void
+	public function goodInfo() :void
 	{
 		$this->objController->promptPjax ( $this->logic->checkIdIsNumric(), $this->logic->getErrorMessage () );
 		
@@ -115,14 +115,14 @@ class GoodsController {
     /*
        Tweltar
     */
-    public function goodInfo() : void
-    {
-        $this->objController->promptPjax($this->logic->checkIdIsNumric(),$this->logic->getErrorMessage());
-
-        $ret = $this->logic->getGoodsDetailCache();
-
-
-    }
+//    public function goodInfo() : void
+//    {
+//        $this->objController->promptPjax($this->logic->checkIdIsNumric(),$this->logic->getErrorMessage());
+//
+//        $ret = $this->logic->getGoodsDetailCache();
+//
+//
+//    }
 
 
 
