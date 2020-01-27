@@ -695,5 +695,16 @@ class StoreLogic extends AbstractGetDataLogic
     	
     	return $data;
     }
+    /*khantminthu*/
+    public function getShopDetail()
+    {
+        $where['id'] = $this->data['id'];
+        $field = $this->getTableColum();
+        $order = parent::getSearchOrderKey();
+        $retData = $this->modelObj->where($where)->field($field)->order($order)->find();
+        $retData['goodsNumber'] = $this->goodModel->getShopGoodNumber($this->data['id']);
+        return $retData;
+    }
+    /*END*/
     
 }

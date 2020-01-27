@@ -238,10 +238,26 @@ class StoreController
     	$this->objController->promptPjax ( $status, $checkObj->getErrorMessage () );
     		
     	$ret = $this->logic->getShopInfo ();
-    		
+
     	$this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
     		
     	$this->objController->ajaxReturnData ( $ret );
+    }
+
+    /*khantminthu*/
+    public function getShop() //shopINfo to my own style
+    {
+        $checkObj = new checkParam( $this->logic->getValidateByLogin() , $this->args);
+
+        $status = $checkObj->checkParam();
+
+        $this->objController->promptPjax ( $status, $checkObj->getErrorMessage () );
+
+        $ret = $this->logic->getShopDetail();
+
+        $this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
+            
+        $this->objController->ajaxReturnData ( $ret );
     }
     /**
      * 获取店铺证照信息
