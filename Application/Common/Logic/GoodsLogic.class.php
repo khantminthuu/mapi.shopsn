@@ -814,6 +814,7 @@ class GoodsLogic extends AbstractGetDataLogic
            if(!empty($data)){
             return $data;
         }
+
         // $data = $this->getGoodsDetail();
         $data = $this->modelObj->getGoodsDetail($this->data);
         if(empty($data)){
@@ -823,6 +824,59 @@ class GoodsLogic extends AbstractGetDataLogic
         $cache->set($key,$data);
         return $data;
     }
+
+
+    /*
+       ttpw
+   */
+
+    public function getGoodImgDetail() :array
+    {
+        $key = 'goods_detail'.$this->data['id'] ;
+
+        $cache = Cache::getInstance( '', ['expire'=>60]);
+
+        $data = $cache->get($key);
+
+        if(!empty($data)){
+            return $data;
+
+        }
+
+        $data = $this->modelObj->getGoodImgDetail($this->data);
+        if(empty($data))
+        {
+            $this->errorMessage='没有找到这个商品任何信息';
+            return[];
+        }
+
+        $cache->set($key,$data);
+        return $data;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public function getGoodsDetail()    :array

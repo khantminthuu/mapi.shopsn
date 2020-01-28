@@ -160,17 +160,7 @@ class StoreLogic extends AbstractGetDataLogic
         return $retData;
     }
 	
-    /**
-     * 
-     * {@inheritDoc}
-     * @see \Common\Logic\AbstractGetDataLogic::getTableColum()
-     */
-    protected function getTableColum() :array
-    {
-    	return [
-    		'id', 'shop_name', 'store_collect', 'store_logo','description'
-    	];
-    }
+
 	
     /**
      * 得到首页店铺列表
@@ -695,6 +685,19 @@ class StoreLogic extends AbstractGetDataLogic
     	
     	return $data;
     }
+
+    /**
+     *
+     * {@inheritDoc}
+     * @see \Common\Logic\AbstractGetDataLogic::getTableColum()
+     */
+    protected function getTableColum() :array
+    {
+        return [
+            'id', 'shop_name', 'store_collect', 'store_logo','description'
+        ];
+    }
+
     /*khantminthu*/
     public function getShopDetail()
     {
@@ -703,8 +706,43 @@ class StoreLogic extends AbstractGetDataLogic
         $order = parent::getSearchOrderKey();
         $retData = $this->modelObj->where($where)->field($field)->order($order)->find();
         $retData['goodsNumber'] = $this->goodModel->getShopGoodNumber($this->data['id']);
+
+
         return $retData;
     }
+
+    /*ttpw*/      //promoting the sale of goods
+
+    public function getDiscountDetail()
+    {
+        $where['id'] = $this->data['id'];
+
+        $field = $this->getDiscountColumn();
+
+        $order = parent::getSearchOrderKey();
+        $ret = $this->modelObj->where($where)->field($field)->order($order)->find();
+        $ret['GoodsNumber'] = $this->goodModel->getShopGoodNumber($this->data['id']);
+        $ret['discountNumber'] = $this->goodModel->getShopDiscountNumber($this->data['id']);
+        $ret ['img'] =$this->goodsImagesModel->where(['goods_id'=>$this->data['id']])->field('pic_url')->select();
+        echo "<pre>";
+        var_dump($ret);
+        die;
+
+        return $ret;
+
+
+
+
+    }
+
+    protected function getDiscountColumn() :array
+    {
+        return [
+            'id', 'shop_name', 'store_collect', 'store_logo','description'
+        ];
+    }
+
+
     /*END*/
     
 }

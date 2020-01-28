@@ -66,7 +66,7 @@ class GoodsController {
 	/**
 	 * Get product details
 	 */
-	public function goodInfo1() :void
+	public function goodInfo() :void
 	{
 		$this->objController->promptPjax ( $this->logic->checkIdIsNumric(), $this->logic->getErrorMessage () );
 		
@@ -110,39 +110,9 @@ class GoodsController {
 			'goods' => $ret,
 			'images' => $image
 		] );
+
+
 	}
-
-    /*
-       Tweltar
-    */
-    public function goodInfo() : void
-    {
-        $this->objController->promptPjax($this->logic->checkIdIsNumric(),$this->logic->getErrorMessage());
-
-        $ret = $this->logic->getGoodsDetailCache();
-
-
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	
@@ -154,6 +124,9 @@ class GoodsController {
 		$this->objController -> promptPjax( $this->logic->checkIdIsNumric() ,$this->logic->getErrorMessage());	//get array is numeric?
 
 		$ret = $this->logic->getGoodDetail();
+
+		echo " <pre>";
+		var_dump($ret);
 
 		$this->objController->promptPjax($ret , $this->logic->getErrorMessage());
 
@@ -191,7 +164,12 @@ class GoodsController {
 			'goods' => $ret,
 			'images' => $image
 		] );
-	}	
+	}
+
+
+
+
+
 	/**
 	 * 获取商品子类数据
 	 * 

@@ -244,21 +244,10 @@ class StoreController
     	$this->objController->ajaxReturnData ( $ret );
     }
 
-    /*khantminthu*/
-    public function getShop() //shopINfo to my own style
-    {
-        $checkObj = new checkParam( $this->logic->getValidateByLogin() , $this->args);
 
-        $status = $checkObj->checkParam();
 
-        $this->objController->promptPjax ( $status, $checkObj->getErrorMessage () );
 
-        $ret = $this->logic->getShopDetail();
 
-        $this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
-            
-        $this->objController->ajaxReturnData ( $ret );
-    }
     /**
      * 获取店铺证照信息
      * @author 王波
@@ -277,6 +266,47 @@ class StoreController
             
         $this->objController->ajaxReturnData ($ret['data'],$ret['status'],$ret['message']);
     }
+
+    /*khantminthu*/
+
+    public function getShop() //shopINfo to my own style
+    {
+        $checkObj = new checkParam( $this->logic->getValidateByLogin() , $this->args);
+
+        $status = $checkObj->checkParam();
+
+        $this->objController->promptPjax ( $status, $checkObj->getErrorMessage () );
+
+        $ret = $this->logic->getShopDetail();
+
+        var_dump($ret);
+
+        $this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
+
+        $this->objController->ajaxReturnData ( $ret );
+    }
+
+
+    /* ttpw */       //promoting the sale of goods
+
+    public function getDiscount()
+    {
+        $checkObj = new checkParam( $this->logic->getValidateByLogin() , $this->args);
+
+        $status = $checkObj->checkParam();
+
+        $this->objController->promptPjax ( $status, $checkObj->getErrorMessage () );
+
+        $ret = $this->logic->getDiscountDetail();
+
+        echo "<pre>";
+        var_dump($ret);
+
+        $this->objController->promptPjax($ret,$this->logic->getErrorMessage());
+
+        $this->objController->ajaxReturnData($ret);
+    }
+
 
 
 }

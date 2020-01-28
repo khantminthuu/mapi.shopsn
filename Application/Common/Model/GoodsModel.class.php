@@ -104,8 +104,19 @@ class GoodsModel extends BaseModel
         $where['approval_status'] = 1;
         return $this->where($where)->count();
     }
+
+    public function getShopDiscountNumber($storeId ){
+        $where['p_id'] = ['GT', 0];
+        $where['store_id'] = $storeId;
+        $where['price_market'] = 100;
+        return $this->where($where)->count();
+    }
+
+
+
+
     /**
-     * 获取推荐商品详情
+     * Get recommended product details
      *
      */
     public function getCopmboGoodInfo($goodId){
