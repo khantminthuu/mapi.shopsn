@@ -50,18 +50,20 @@ class CategoryLogic extends AbstractGetDataLogic
 	{
 		$where['id'] = $this->data['id'];
 		$save = $this->modelObj->where($where)->field('hide')->select();
+		$save = $save[0];
+		if($save['hide']==1){
 			$data = ['hide'=>0];
 			$res = $this->modelObj->where($where)->save($data);
-		
+		}else{
+			$data = ['hide'=>1];
+			$res = $this->modelObj->where($where)->save($data);
+		}		
 		if($res){
 			echo "success";	
 		}else{
 			echo "unsuccess";
 		}
-		// }else($save==0){
-		// 	$save = 1;
-		// 	$this->modelObj->save($save);
-		// }
+	
 
 
 	}
