@@ -27,7 +27,7 @@ class CategoryLogic extends AbstractGetDataLogic
 	public function getValidateByLogin()
 	{
 		$message = [
-			'id' => ['number'=>'必须传入店铺ID']
+			'id' => ['number'=>'We need Id Number get method']
 		];
 		return $message;
 	}
@@ -58,11 +58,7 @@ class CategoryLogic extends AbstractGetDataLogic
 			$data = ['hide'=>1];
 			$res = $this->modelObj->where($where)->save($data);
 		}		
-		if($res){
-			echo "success";	
-		}else{
-			echo "unsuccess";
-		}
+		return true;
 	
 
 

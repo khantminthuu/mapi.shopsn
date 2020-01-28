@@ -34,8 +34,12 @@ class CategoryController
 
 	public function showCategory()
 	{
-		$showData = $this->logic->saveShow();
+		$checkobj = new CheckParam($this->logic->getValidateByLogin(),$this->args);
 
-		
+		$status = $checkobj->checkParam();
+
+		$this->objController->promptPjax($status, $this->logic->getErrorMessage());
+
+		$showData = $this->logic->saveShow();
 	}
 }
