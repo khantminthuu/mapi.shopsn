@@ -189,4 +189,10 @@ class PromotionController
         );
         $this->objController->ajaxReturnData($data);
     }
+    public function promotions()
+    {
+        $adModel = M('ad');
+        $goodsModel = M('goods');
+        $
+    }
 }

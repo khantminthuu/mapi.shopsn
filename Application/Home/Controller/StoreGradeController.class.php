@@ -22,9 +22,6 @@ class StoreGradeController
         $this->args = $args;
 
         $this->logic = new StoreGradeLogic($args);
-
-     
-
     }
     /**
      * 数据

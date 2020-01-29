@@ -95,6 +95,7 @@ class StoreController
      */
     public function attenStore(){
         $this->_initUser();
+        
         $checkObj = new CheckParam($this->storeFollow->getValidateByLogin(), $this->args);
 
         $status = $checkObj->checkParam();

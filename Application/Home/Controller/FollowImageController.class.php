@@ -21,10 +21,6 @@ class FollowImageController
 
         $ret = $this->logic->getAllCategory();
 
-        echo "<pre>";
-       print_r($ret);
-        die;
-
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
 
         $this->objController->ajaxReturnData($ret);
