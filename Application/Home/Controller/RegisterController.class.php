@@ -23,8 +23,8 @@ class RegisterController
 		$this->args = $args;
 		
 		$this->init();
-		
-		$this->objController->promptPjax(IS_POST, '不允许请求');
+	
+		$this->objController->promptPjax(IS_GET, '不允许请求');
 		
 		$this->logic = new UserLogic($args);
 	}

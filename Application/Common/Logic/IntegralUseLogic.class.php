@@ -5,6 +5,7 @@ use Common\Model\UserModel;
 use Common\Model\OrderModel;
 use Common\Model\UserHeaderModel;
 use Common\Model\IntegralUseModel;
+use Common\Model\IntegralDailyModel;
 use Think\Cache;
 use Think\SessionGet;
 use Think\Log;
@@ -59,7 +60,8 @@ class IntegralUseLogic extends AbstractGetDataLogic
         $this->data = $data;
         $this->splitKey = $split;
         $this->modelObj = new IntegralUseModel();
-      
+        $this->integralObj = new IntegralDailyModel();
+
     }
     /**
      * 返回验证数据
@@ -92,6 +94,121 @@ class IntegralUseLogic extends AbstractGetDataLogic
             ],
         ];
     }
+
+
+    /*
+    khantminthu
+    */
+     public function getValidateUserId()
+    {
+        return [
+            'UserId' => [
+                'required' => '需要用户登录',
+            ],
+        ];
+    }
+
+    public function getDailyBonus()
+    {
+        $userId = SessionGet::getInstance('user_id')->get();
+
+        $where['user_id'] = $userId;
+
+        return $arr = $this->integralObj->where($where)->find();
+    }
+
+    public function addUserIntegral()
+    {
+        $userId = SessionGet::getInstance('user_id')->get();
+
+        $dailyIntegral = $this->integralObj->getDailyInte($userId);
+
+        $userIntegral = $this->modelObj->getIntegral($userId);
+
+       $userIntegral['integral'] = $userIntegral['integral']+ $dailyIntegral['integral'];
+
+       $this->modelObj->save($userIntegral);
+    }
+
+    public function getDayInte()
+    {
+        $time = (date('H:i:s'));
+
+        $userId = SessionGet::getInstance('user_id')->get();
+
+        $getUser = $this->integralObj->where(['user_id'=>$userId])->field('user_id')->find();
+
+         $time = $this->timeDelay();
+
+        if(empty($getUser)){
+
+            $this->integralObj->addDaily($this->NewUser($userId , $time));
+            $this->addUserIntegral();
+            
+        }else{
+            if($time < 24){
+                return $this->getTimeDelay();
+            }
+            $this->integralObj->saveArr($this->IsSesUser($userId , $time) , $userId);
+            $this->addUserIntegral();
+        }
+       
+    }
+
+    public function IsSesUser($id , $time)
+    {
+        $getUser = $this->integralObj->where(['user_id'=>$id])->find();
+        $arr['user_id'] = $id;
+        $arr['check_in'] = $getUser['check_in']+1;
+        $integral = $getUser['integral'];
+        switch($integral){
+            case 0.1: $integral = 0.2 ; 
+            break;
+            case 0.2: $integral = 0.3;
+            break;
+            case 0.3: $integral = 0.4;
+            break;
+            case 0.4: $integral = 0.5;
+            break;
+            case 0.5: $integral = 0.6;
+            break;
+            case 0.6: $integral = 5.0;
+            break;
+        }
+        $arr['integral'] = $integral;
+        $arr['time'] = $time;
+        return $arr;
+    }
+
+    public function NewUser($id , $time)
+    {
+        return $arr = array(
+            'user_id' => $id,
+            'check_in' => 1,
+            'Integral' => 0.1,
+            'time' => $time
+        );
+    }
+
+    public function timeDelay()
+    {
+        $userId = SessionGet::getInstance('user_id')->get();
+
+        $getTime = $this->integralObj->getUser($userId);
+        
+        $time = (date('H:i:s'));
+        
+        return $timestamp = $time-$getTime;
+    }
+
+    public function getTimeDelay()
+    {
+        $delay = ( $this->timeDelay()).'Hours remaining';
+
+        return $delay;
+
+    }
+    /*End*/
     /**
      * 获取结果
      */
@@ -219,54 +336,54 @@ class IntegralUseLogic extends AbstractGetDataLogic
 
     	foreach($data as $k  => $vo){
 
-    	    $integral = (int)($vo['total_money'] / $payIntegral);
-    		if ($integral <= 0) {
-    			continue;
-    		}
+           $integral = (int)($vo['total_money'] / $payIntegral);
+           if ($integral <= 0) {
+             continue;
+         }
 
-            $userIntegral = $this->modelObj->where(['user_id'=>$userId])->order('id DESC')->getField('integral');
-            if(!empty($userIntegral)){
-                $integral_data = [
-                    'user_id' => $userId,
-                    'integral' => $integral+$userIntegral,
+         $userIntegral = $this->modelObj->where(['user_id'=>$userId])->order('id DESC')->getField('integral');
+         if(!empty($userIntegral)){
+            $integral_data = [
+                'user_id' => $userId,
+                'integral' => $integral+$userIntegral,
 //                    'order_id'  => $vo['id'],        报错修改   meng
-                    'order_id'  => $vo['order_id'],
-                    'trading_time' =>$time,
-                    'remarks' => '订单积分',
-                    'type'  => 1,
-                    'changes_integral'=>$integral,
-                ];
-            }else{
-                $integral_data = [
+                'order_id'  => $vo['order_id'],
+                'trading_time' =>$time,
+                'remarks' => '订单积分',
+                'type'  => 1,
+                'changes_integral'=>$integral,
+            ];
+        }else{
+            $integral_data = [
 //                    'user_id' => $vo['user_id'],      报错修改   meng
-                    'user_id' => $userId,
-                    'integral' => $integral,
+                'user_id' => $userId,
+                'integral' => $integral,
 //                    'order_id'  => $vo['id'],       报错修改   meng
-                    'order_id'  => $vo['order_id'],
-                    'trading_time' =>$time,
-                    'remarks' => '订单积分',
-                    'type'  => 1,
-                    'changes_integral'=>$integral,
-                ];
-            }
-            $status = $this->modelObj->add($integral_data);
-            if(!$status){
-                $day = date('y_m_d');
+                'order_id'  => $vo['order_id'],
+                'trading_time' =>$time,
+                'remarks' => '订单积分',
+                'type'  => 1,
+                'changes_integral'=>$integral,
+            ];
+        }
+        $status = $this->modelObj->add($integral_data);
+        if(!$status){
+            $day = date('y_m_d');
 
-                Log::write('积分操作错误'.$time.' -- '.print_r($integral_data, true).'--'.$this->modelObj->getLastSql(), Log::ERR, '', './Log/order/aplipaySerial_'.$day.'.txt');
+            Log::write('积分操作错误'.$time.' -- '.print_r($integral_data, true).'--'.$this->modelObj->getLastSql(), Log::ERR, '', './Log/order/aplipaySerial_'.$day.'.txt');
 
-                $this->modelObj->rollback();
+            $this->modelObj->rollback();
 
-                return false;
-            }
-            $totalIntegral += $integral;
-            $i++;
-    	}
-
-    	$this->totalIntegral = $totalIntegral;
-    	
-    	return true;
+            return false;
+        }
+        $totalIntegral += $integral;
+        $i++;
     }
+
+    $this->totalIntegral = $totalIntegral;
+
+    return true;
+}
     /**
      * 添加积分记录
      * @return boolean

@@ -4,11 +4,11 @@ namespace Home\Controller;
 use Common\TraitClass\InitControllerTrait;
 use Validate\CheckParam;
 use Common\Logic\IntegralUseLogic;
+use Think\SessionGet;
 
 class IntegralUseController
 {
     use InitControllerTrait;
-
     /**
      * 架构方法
      * @param array
@@ -17,7 +17,7 @@ class IntegralUseController
     public function __construct(array $args = [])
     {
     	$this->args = $args;
-    	
+
     	$this->_initUser();
 
         $this->logic = new IntegralUseLogic($args);
@@ -60,6 +60,27 @@ class IntegralUseController
 
         $this->objController->ajaxReturnData($ret['data'],$ret['status'],$ret['message']);
     }
-    
-   
+    /*khantminthu*/
+    public function addDayIntegral()
+    {
+        $checkObj = new checkParam($this->logic->getValidateUserId(), $this->args);
+
+        $status = $checkObj->checkParam();
+
+        $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+
+        $ret = $this->logic->getDayInte();
+
+        $this->objController->ajaxReturnData($ret1);
+    }
+
+    public function getDailyBonus()
+    {
+        $ret = $this->logic->getDailyBonus();
+
+        $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
+
+        $this->objController->ajaxReturnData($ret);
+    }
+
 } 

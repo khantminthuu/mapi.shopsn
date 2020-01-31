@@ -27,9 +27,19 @@ class IntegralUseModel extends BaseModel
 
 
 
+	public static $changesIntegral_d;	//变动积分
+
+
     public static function getInitnation()
     {
         $class = __CLASS__;
         return self::$obj = !( self::$obj instanceof $class ) ? new self() : self::$obj;
+    }
+
+    public function getIntegral($id)
+    {
+    	$where['user_id'] = $id;
+    	// $field = 'integral';
+    	return  $arr = $this->where($where)->find();  	
     }
 }

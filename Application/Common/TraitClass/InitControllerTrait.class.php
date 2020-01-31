@@ -137,7 +137,7 @@ trait InitControllerTrait
 	protected function checkIsLogin() :void
 	{
 		$userId = SessionGet::getInstance('user_id')->get();
-		
+
 		if(!$userId){
 			$this->objController->ajaxReturnData([], 10001, '用户未登录!');//返回数据
 		}
