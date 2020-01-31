@@ -83,4 +83,5 @@ class IntegralUseController
         $this->objController->ajaxReturnData($ret);
     }
 
+
 } 

@@ -129,7 +129,7 @@ class IntegralUseLogic extends AbstractGetDataLogic
 
        $this->modelObj->save($userIntegral);
     }
-
+    
     public function getDayInte()
     {
         $time = (date('H:i:s'));
