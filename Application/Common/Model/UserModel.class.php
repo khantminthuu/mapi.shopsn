@@ -58,6 +58,8 @@ class UserModel extends BaseModel
 	public static $authentication_d;	//身份认证【0，待认证 1成功， 2失败】
 
 
+	public static $uId_d;	//follow
+    
     public static function getInitnation()
     {
         $class = __CLASS__;
@@ -191,5 +193,19 @@ class UserModel extends BaseModel
     public function userSave($where,$data){
     	$res = $this->where($where)->save($data);
     	return $res;
+    }
+    
+    /*
+     * khantminthu
+     * */
+    ##UserDetail
+    public function getUserDetail($id)
+    {
+        $where['id'] = $id;
+        $field = array('user_name','nick_name');
+        $getUserInfo = $this->where($where)->field($field)->find();
+        $getUserImg = M('user_header')->where(['user_id'=>$id])->field('user_header')->find();
+        $getUserInfo['user_img'] = $getUserImg['user_header'];
+        return $getUserInfo;
     }
 }

@@ -112,7 +112,6 @@ class RegisterController
 	 */
 	public function accountRegister()
 	{
-			
 		$checkObj = new CheckParam($this->logic->getRuleByAccountRegister(), $this->args);//检测参数, $this->logic->getMessageByRegSendSms() 里定义好的检测方法，类似jQuery Validate自动验证方法
 		
 		$status = $checkObj->checkParam();//检测参数，类似jQuery Validate自动验证方法
@@ -241,4 +240,5 @@ class RegisterController
 		
 		$this->objController->ajaxReturnData([]);//返回数据
 	}
+	
 }

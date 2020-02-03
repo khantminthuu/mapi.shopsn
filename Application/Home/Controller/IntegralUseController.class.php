@@ -71,7 +71,7 @@ class IntegralUseController
 
         $ret = $this->logic->getDayInte();
 
-        $this->objController->ajaxReturnData($ret1);
+        $this->objController->ajaxReturnData($ret);
     }
 
     public function getDailyBonus()
@@ -83,5 +83,9 @@ class IntegralUseController
         $this->objController->ajaxReturnData($ret);
     }
 
-
+    public function test()
+    {
+        $this->logic->test();
+        
+    }
 } 

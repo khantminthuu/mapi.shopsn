@@ -1,52 +1,21 @@
 <?php
+namespace
+class hello
+{
+    private static $obj;
     
-    public function addDailyIntegral($str)
+    public function __construct(array $data=[] , $split = '')
     {
-        // foreach ($cond as $key => $value) {
-        //  do {
-        //      if($str==$value['user_id']){
-        //          echo "a";
-        //      }else{
-        //          echo "b";
-        //      }
-        //  } while ( <= 10);
-            
-        // }
-        // die;
-        // $target = mktime(0, 0, 0, 2, 10, 2020);
-        // $today = time();
-        // $difference = $target-$today;
-        // $day = $difference/86400;
-        $cond = $this->field('user_id,clock')->select();
-        // echo "<pre>";
-        // print_r($cond);
-        // die;
-              
-        $arr['user_id']=$str;
-        $arr['check_in'] = 1;
-        $arr['Integral'] = 1;
-        $arr['clock'] = $time;
-        // $addData = $this->add($arr);
-        // return $addData;
-        foreach ($cond as $key => $value) {
-            $diffTime = $time-$value['clock'];
-            if($diffTime!=24){
-                return $ret = $time-$value['clock'];
-            }else{
-                $addData = $this->add($arr);
-            }
-        }
+        $this->data = $data;
+        $this->splite = $split;
     }
-
-
-
-    public function getIntegralList() :array
+    
+    public function abc()
     {
-        $this->searchTemporary = [
-            IntegralUseModel::$userId_d => SessionGet::getInstance('user_id')->get(),
-        ];
-        
-        $data = $this->getParseDataByList();
-        
-        return $data;
+        $name = $this->data;
+        $arr = array(
+            'name' => $this->data,
+            'splite' => $this->splite
+        );
     }
+}

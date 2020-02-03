@@ -99,7 +99,7 @@ class IntegralUseLogic extends AbstractGetDataLogic
     /*
     khantminthu
     */
-     public function getValidateUserId()
+    public function getValidateUserId()
     {
         return [
             'UserId' => [
@@ -125,9 +125,9 @@ class IntegralUseLogic extends AbstractGetDataLogic
 
         $userIntegral = $this->modelObj->getIntegral($userId);
 
-       $userIntegral['integral'] = $userIntegral['integral']+ $dailyIntegral['integral'];
+        $userIntegral['integral'] = $userIntegral['integral']+ $dailyIntegral['integral'];
 
-       $this->modelObj->save($userIntegral);
+        $this->modelObj->save($userIntegral);
     }
     
     public function getDayInte()
@@ -138,7 +138,7 @@ class IntegralUseLogic extends AbstractGetDataLogic
 
         $getUser = $this->integralObj->where(['user_id'=>$userId])->field('user_id')->find();
 
-         $time = $this->timeDelay();
+        $time = $this->timeDelay();
 
         if(empty($getUser)){
 
@@ -152,7 +152,7 @@ class IntegralUseLogic extends AbstractGetDataLogic
             $this->integralObj->saveArr($this->IsSesUser($userId , $time) , $userId);
             $this->addUserIntegral();
         }
-       
+
     }
 
     public function IsSesUser($id , $time)
@@ -488,8 +488,7 @@ class IntegralUseLogic extends AbstractGetDataLogic
     	$data = [];
     	
     	$userId = SessionGet::getInstance('user_id')->get();
-    	
-    	
+    	    	
     	$orderData = SessionManager::GET_ORDER_DATA();
     	
     	$data[IntegralUseModel::$userId_d] = $userId;
@@ -509,5 +508,9 @@ class IntegralUseLogic extends AbstractGetDataLogic
     	return $data;
     }
     
+    public function test()
+    {
     
+    }  
+
 }

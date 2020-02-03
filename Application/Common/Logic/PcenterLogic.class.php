@@ -2,6 +2,7 @@
 
 namespace Common\Logic;
 
+use Common\Model\FollowImageModel;
 use Common\Model\FootPrintModel;
 use Common\Model\GoodsModel;
 use Common\Model\UserModel;
@@ -22,6 +23,8 @@ class PcenterLogic extends AbstractGetDataLogic {
 		$this->modelObj = new UserModel ();
 		$this->modelFoot = new FootPrintModel ();
 		$this->goodsModelObj = new GoodsModel ();
+		$this->userModelObj = new UserModel();
+		$this->followImageModelObj = new FollowImageModel();
 	}
 	/**
 	 * 返回验证数据
@@ -132,6 +135,7 @@ class PcenterLogic extends AbstractGetDataLogic {
 	}
 	// 我的足迹
 	public function getFoot() {
+	    
 	    $page = empty($this->data['page'])?0:$this->data['page']; 
 		$where['uid'] = SessionGet::getInstance('user_id')->get();//用户id
         $field = 'gid as goods_id,create_time';
@@ -260,4 +264,124 @@ class PcenterLogic extends AbstractGetDataLogic {
 		);
 		return $data;
 	}
+	/*
+	 * khantminthu userdetail
+	 */
+	public function getUserDetail()
+    {
+        $userId = $_SESSION['user_id'];
+        
+        $getUserInfo = $this->userModelObj->getUserDetail($userId);
+        
+        $getFollow = $this->followImageModelObj->getFollow($userId);
+        
+        $getFavourite = M('collection')->where(['user_id'=>$userId])->count();
+        
+        $getFollow['foot'] = $this->getFoot()['data']['count'];
+
+        $getFollow['favourite'] = $getFavourite;
+        
+        return $arr = array(
+            'userInfo' => $getUserInfo,
+            'getFollow' => $getFollow
+        );
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

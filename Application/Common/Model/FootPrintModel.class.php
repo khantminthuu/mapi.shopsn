@@ -19,6 +19,15 @@ class FootPrintModel extends BaseModel
 
 	public static $createTime_d;	//时间
 
+	public static $goodsPic_d;	//商品图片
+
+	public static $goodsName_d;	//商品名字
+
+	public static $isType_d;	//1: 商品   2：旅游  3：合伙人   4：会员
+
+	public static $classId_d;	//分类id
+
+
     public static function getInitnation()
     {
         $class = __CLASS__;

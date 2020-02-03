@@ -19,8 +19,7 @@ class ReviewController
 		$this->logic = new ReviewLogic($args);
 	}
 	public function getUserReview()
-	{
-		
+	{	
 		$userId = SessionGet::getInstance('user_id')->get();
 
 		$ret = $this->logic->getUserReview();
@@ -28,13 +27,6 @@ class ReviewController
 		$this->objController->promptPjax($ret , $this->logic->getErrorMessage());
 
 		$this->objController->ajaxReturnData($ret);
-	}
-
-	public function mo()
-	{
-		$number = 100;
-		for ($num=0; $num < $number ; $num++) { 
-		}
 	}
 	
 }
