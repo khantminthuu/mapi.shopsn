@@ -19,7 +19,9 @@ class FreightModeLogic extends AbstractGetDataLogic
 	public function __construct(array $data = [], $split = '')
 	{
 		$this->data = $data;
+		
 		$this->splitKey = $split;
+		
 		$this->modelObj = new FreightModeModel();
 	}
 	

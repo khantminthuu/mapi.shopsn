@@ -203,10 +203,7 @@ class IntegralUseLogic extends AbstractGetDataLogic
 
     public function getTimeDelay()
     {
-        $delay = ( $this->timeDelay()).'Hours remaining';
-
-        return $delay;
-
+        return $delay = ( $this->timeDelay()).'Hours remaining';
     }
     /*End*/
     /**

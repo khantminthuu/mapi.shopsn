@@ -286,7 +286,12 @@ class PcenterLogic extends AbstractGetDataLogic {
             'getFollow' => $getFollow
         );
     }
-
+    
+    public function test()
+    {
+    
+    }
+   
 }
 
 

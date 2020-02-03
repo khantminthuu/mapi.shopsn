@@ -59,10 +59,18 @@ class PcenterController
 	public function userDetail()
     {
         $ret = $this->logic->getUserDetail();
-        
+
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
         
         $this->objController->ajaxReturnData($ret);
+    }
+    public function test()
+    {
+        $test = $this->logic->test();
+        
+        if(empty($test)){
+            $this->objController->promptPjax($test , $this->logic->getErrorMessage());
+        }
     }
 	
 }

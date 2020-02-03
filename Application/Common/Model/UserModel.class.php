@@ -201,11 +201,12 @@ class UserModel extends BaseModel
     ##UserDetail
     public function getUserDetail($id)
     {
-        $where['id'] = $id;
-        $field = array('user_name','nick_name');
-        $getUserInfo = $this->where($where)->field($field)->find();
-        $getUserImg = M('user_header')->where(['user_id'=>$id])->field('user_header')->find();
-        $getUserInfo['user_img'] = $getUserImg['user_header'];
-        return $getUserInfo;
+        $where['u.id'] = $id;
+        
+        $join = "db_user_header as a ON a.user_id = u.id";
+        
+        $field = array('u.user_name','u.nick_name','a.user_header');
+        
+        return $getUserInfo = M('user as u')->join($join ,'LEFT')->where($where)->field($field)->find();
     }
 }
