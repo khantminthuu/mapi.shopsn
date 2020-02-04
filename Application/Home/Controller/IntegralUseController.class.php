@@ -63,14 +63,8 @@ class IntegralUseController
     /*khantminthu*/
     public function addDayIntegral()
     {
-        $checkObj = new checkParam($this->logic->getValidateUserId(), $this->args);
-
-        $status = $checkObj->checkParam();
-
-        $this->objController->promptPjax($status, $checkObj->getErrorMessage());
-
         $ret = $this->logic->getDayInte();
-
+    
         $this->objController->ajaxReturnData($ret);
     }
 
@@ -82,10 +76,5 @@ class IntegralUseController
 
         $this->objController->ajaxReturnData($ret);
     }
-
-    public function test()
-    {
-        $this->logic->test();
-        
-    }
+    
 } 

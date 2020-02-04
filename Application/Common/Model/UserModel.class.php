@@ -208,5 +208,6 @@ class UserModel extends BaseModel
         $field = array('u.user_name','u.nick_name','a.user_header');
         
         return $getUserInfo = M('user as u')->join($join ,'LEFT')->where($where)->field($field)->find();
+         
     }
 }

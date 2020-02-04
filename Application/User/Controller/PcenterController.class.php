@@ -68,9 +68,7 @@ class PcenterController
     {
         $test = $this->logic->test();
         
-        if(empty($test)){
-            $this->objController->promptPjax($test , $this->logic->getErrorMessage());
-        }
+        var_dump($test);
     }
 	
 }

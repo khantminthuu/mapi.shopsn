@@ -132,13 +132,13 @@ class IntegralUseLogic extends AbstractGetDataLogic
     
     public function getDayInte()
     {
-        $time = (date('H:i:s'));
+        $time = date("Y-m-d h:i:s");
 
         $userId = SessionGet::getInstance('user_id')->get();
 
         $getUser = $this->integralObj->where(['user_id'=>$userId])->field('user_id')->find();
 
-        $time = $this->timeDelay();
+        $timestamp = $this->timeDelay();
 
         if(empty($getUser)){
 
@@ -146,7 +146,7 @@ class IntegralUseLogic extends AbstractGetDataLogic
             $this->addUserIntegral();
             
         }else{
-            if($time < 24){
+            if($timestamp <22){
                 return $this->getTimeDelay();
             }
             $this->integralObj->saveArr($this->IsSesUser($userId , $time) , $userId);
@@ -154,7 +154,18 @@ class IntegralUseLogic extends AbstractGetDataLogic
         }
 
     }
-
+    public function timeDelay()
+    {
+        $userId = SessionGet::getInstance('user_id')->get();
+    
+        $getTime = $this->integralObj->getUser($userId);
+        
+        $time = date("Y-m-d h:i:s");
+        $time1 = strtotime($time);
+        $time2 = strtotime($getTime);
+        return $timestamp = round(($time1-$time2)/3600,1);
+    }
+    
     public function IsSesUser($id , $time)
     {
         $getUser = $this->integralObj->where(['user_id'=>$id])->find();
@@ -190,20 +201,9 @@ class IntegralUseLogic extends AbstractGetDataLogic
         );
     }
 
-    public function timeDelay()
-    {
-        $userId = SessionGet::getInstance('user_id')->get();
-
-        $getTime = $this->integralObj->getUser($userId);
-        
-        $time = (date('H:i:s'));
-        
-        return $timestamp = $time-$getTime;
-    }
-
     public function getTimeDelay()
     {
-        return $delay = ( $this->timeDelay()).'Hours remaining';
+        return $delay ='wait for until one day';
     }
     /*End*/
     /**
@@ -504,10 +504,5 @@ class IntegralUseLogic extends AbstractGetDataLogic
     	
     	return $data;
     }
-    
-    public function test()
-    {
-    
-    }  
 
 }

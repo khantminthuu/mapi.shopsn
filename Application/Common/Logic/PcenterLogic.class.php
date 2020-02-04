@@ -287,9 +287,24 @@ class PcenterLogic extends AbstractGetDataLogic {
         );
     }
     
+    public function test2()
+    {
+        $user_name = "khantminthu22@gmail.com";
+        $strlen     = mb_strlen($user_name, 'utf-8');
+        $firstStr     = mb_substr($user_name, 0, 1, 'utf-8');
+        $lastStr     = mb_substr($user_name, -1, 1, 'utf-8');
+        return $strlen == 2 ? $firstStr . str_repeat('*', mb_strlen($user_name, 'utf-8') - 1)
+            : $firstStr . str_repeat("*", $strlen - 2) . $lastStr;
+    }
     public function test()
     {
-    
+        $user_name = "khantminthu";
+        $strlen = mb_strlen($user_name,'utf-8');
+        $firstStr = mb_substr($user_name,0,1,'utf-8');
+        $lastStr = mb_substr($user_name,-1,1,'utf-8');
+        echo "https://www.youtube.com/watch?v=EDW0CMRPP2U";
+        var_dump($lastStr);
+        die;
     }
    
 }
