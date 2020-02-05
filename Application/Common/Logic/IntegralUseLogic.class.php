@@ -205,6 +205,25 @@ class IntegralUseLogic extends AbstractGetDataLogic
     {
         return $delay ='wait for until one day';
     }
+    
+    public function openNotification()
+    {
+        $userId = $_SESSION['user_id'];
+        $where['user_id'] = $userId;
+        $getNoti = $this->integralObj->where($where)->find();
+        if($getNoti['noti']==1){
+            $getNoti['noti'] = 0;
+        }else{
+            $getNoti['noti'] =1;
+        }
+        $result = $this->integralObj->save($getNoti);
+        
+        return $arr = array(
+            'message' => 'success',
+            'status' => 1,
+            'data' => $result
+        );
+    }
     /*End*/
     /**
      * 获取结果
@@ -504,5 +523,19 @@ class IntegralUseLogic extends AbstractGetDataLogic
     	
     	return $data;
     }
-
+    
+    public function test()
+    {
+        $userId = $_SESSION['user_id'];
+        $user = $this->modelObj->alias('a')
+                ->join('left join db_user as u on u.id =  a.user_id ')
+                ->join('left join db_user_header as h on h.user_id = u.id')
+                ->field('a.integral , u.user_name , h.user_header')
+                ->where(['a.user_id'=>$userId])
+                ->find();
+        echo "<pre>";
+        print_r($user);
+        die;
+       
+    }
 }

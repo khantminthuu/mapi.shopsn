@@ -77,4 +77,15 @@ class IntegralUseController
         $this->objController->ajaxReturnData($ret);
     }
     
+    public function getNotification()
+    {
+        $ret = $this->logic->openNotification();
+        
+        $this->objController->ajaxReturnData($ret['data'],$ret['status'],$ret['message']);
+    }
+    
+    public function test()
+    {
+        $rett = $this->logic->test();
+    }
 } 

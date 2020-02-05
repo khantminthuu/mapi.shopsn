@@ -17,6 +17,9 @@ class IntegralDailyModel extends BaseModel
 	public static $time_d;	//time
 
 
+	public static $noti_d;	//noti 1 is on , noti 0 is off
+
+
 	public static function getInitnation()
 	{
 		$class = __CLASS__;

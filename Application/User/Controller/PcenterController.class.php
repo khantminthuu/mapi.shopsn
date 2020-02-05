@@ -38,7 +38,7 @@ class PcenterController
 	public function deleteFootprint(){
 		$result=$this->logic->delFoot();
 		
-		$this->objController->promptPjax($result, $this->logic->getErrorMessage());
+		$this->objCon+troller->promptPjax($result, $this->logic->getErrorMessage());
 		
 		$this->objController->ajaxReturnData($result['data'],$result['status'],$result['message']);
 	}
