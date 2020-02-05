@@ -4,7 +4,7 @@ namespace Home\Controller;
 
 use Common\Logic\FollowImageLogic;
 use Common\TraitClass\InitControllerTrait;
-
+use Validate\CheckParam;
 
 class FollowImageController
 {
@@ -12,32 +12,38 @@ class FollowImageController
     public function __construct(array $args=[])
     {
         $this ->args = $args;
+        
+        $this->_initUser();
+        
         $this -> logic = new FollowImageLogic($args);
     }
 
-
-    public function getCategory()
+    /*
+     * khantminthu
+     * */
+    public function getAllUser()
     {
 
-        $ret = $this->logic->getAllCategory();
-
+        $ret = $this->logic->getAllUser();
+        
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
 
         $this->objController->ajaxReturnData($ret);
     }
 
-    public function getFollow()
+    public function addFollow()
     {
-        $ret = $this->logic->getAllFollow();
-
-        echo "<pre>";
-        print_r($ret);
-        die;
+        $checkObj = new CheckParam($this->logic->getFollowId(), $this->args);
+        
+        $status = $checkObj->checkParam();
+        
+        $this->objController->promptPjax($status , $checkObj->getErrorMessage());
+        
+        $ret = $this->logic->addFollow();
 
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
 
-        $this->objController->ajaxReturnData($ret);
-
+        $this->objController->ajaxReturnData($ret['status'] , $ret['message'] , $ret['data']);
     }
 
 }

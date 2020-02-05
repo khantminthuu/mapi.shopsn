@@ -1,19 +1,18 @@
 <?php
 
-public function getPanicDetail(){
-    $post = $this->data;
-    $data = $this->modelObj->alias('a')
-        ->field('a.id,a.panic_price,a.end_time,a.quantity_limit,b.title,b.p_id,b.store_id,d.shop_name,d.store_logo,d.description')
-        ->join('left join db_goods as b on a.goods_id = b.id')
-        ->join('left join db_store as d on d.id = b.store_id')
-        ->where(['a.goods_id'=>$post['goods_id']])
-        ->find();
-    if(!$data){
-        $this->errorMessage = '数据异常';
-        return false;
+public function getFollow($id)
+{
+    $where['user_id'] = $id;
+    $where['status'] = 1;
+    $getFollow = $this->where($where)->field('user_id,f_id')->select();
+    foreach ($getFollow as $value)
+    {
+        $arr[] = $value['user_id'];
     }
-    $data['goods_count'] = M('goods')->where(['store_id'=>$data['store_id'],'p_id'=>0])->count();
-    $data['follow'] = M('storeFollow')->where(['id'=>$data['store_id']])->count();
-    $data['img'] = M('goodsImages')->where(['goods_id'=>$data['p_id'],'is_thumb'=>0])->getField('pic_url',true);
-    return $data;
+    $follow = count($arr);
+    $follower = $this->where(['f_id'=>$id,'status'=>1])->count();
+    return  $arr = array(
+        'follow' => $follow,
+        'follower' => $follower
+    );
 }

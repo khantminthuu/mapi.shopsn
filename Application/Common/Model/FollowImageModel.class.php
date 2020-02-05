@@ -17,21 +17,46 @@ class FollowImageModel extends BaseModel
        $class = __CLASS__;
        return self::$obj = !( self::$obj instanceof $class) ? new self() : self::$obj;
    }
+  /*
+   * khantminthu
+   * */
+  
+  #PcenterController
    public function getFollow($id)
    {
-       $where['user_id'] = $id;
-       $where['status'] = 1;
-       $getFollow = $this->where($where)->field('user_id,f_id')->select();
-       foreach ($getFollow as $value)
-       {
-           $arr[] = $value['user_id'];
-       }
-       $follow = count($arr);
-       $follower = $this->where(['f_id'=>$id,'status'=>1])->count();
-       return  $arr = array(
-           'follow' => $follow,
-           'follower' => $follower
-       );
+        $where['user_id'] = $id;
+        
+        $getFollow = $this->where($where)->field('f_id')->find();
+        
+        $count1 = M('user')->where(['id'=>['IN',$getFollow['f_id']]])->count();
+        
+        $count2 = $this->where(['f_id'=>['like','%'.$id.'%']])->count();
+        
+        return $arr = array(
+            'follow'=>$count1,
+            'follower'=>$count2
+        );
    }
    
+   public function isUserFollow($id)
+   {
+       $where['user_id'] = $id;
+       $isUser = $this->where($where)->find();
+       if(empty($isUser)){
+           return false;
+       }
+       return true;
+   }
+   
+   public function isFollower($id , $f_id)
+   {
+       $where['f_id'] = ['like','%'.$f_id.'%'];
+       $where['user_id'] = $id;
+       $isFollower = $this->where($where)->find();
+       if(empty($isFollower)){
+           return false;
+       }
+       return true;
+       
+   }
 }

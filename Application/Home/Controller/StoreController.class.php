@@ -280,8 +280,6 @@ class StoreController
 
         $ret = $this->logic->getShopDetail();
 
-        var_dump($ret);
-
         $this->objController->promptPjax ( $ret, $this->logic->getErrorMessage () );
 
         $this->objController->ajaxReturnData ( $ret );

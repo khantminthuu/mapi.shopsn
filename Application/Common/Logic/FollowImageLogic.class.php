@@ -1,15 +1,16 @@
 <?php
 namespace Common\Logic;
-//use Common\Model\FollowImageModel;
-
+use Common\Model\FollowImageModel;
+use Think\SessionGet;
+use Common\Model\UserModel;
 class FollowImageLogic extends AbstractGetDataLogic
 {
     public function __construct(array $data = [] , $split ='')
     {
         $this -> splitKey = $split;
         $this -> data  = $data;
-//        $this -> modelObj = new FollowImageModel();
-
+        $this -> modelObj = new FollowImageModel();
+        $this -> userModelObj = new UserModel();
     }
 
 
@@ -24,42 +25,63 @@ class FollowImageLogic extends AbstractGetDataLogic
     {
 
     }
-
-    public function getAllCategory()
+    
+    /*
+     * khantminthu
+     * */
+    public function getFollowId()
     {
-        $field = 'id,user_name,nick_name';
-        $getdata = M('user')->field($field)->select();
-        foreach ($getdata as $key => $value) {
-            $img = M('user_header')->where(['user_id' => $value['id']])->field('user_header')->find();
-            $getdata[$key]['img'] = $img['user_header'];
+        return [
+            'id' => [
+                'required' => 'need to put id'
+            ]
+        ];
+    }
+    
+    public function getAllUser()
+    {
+        $userId = SessionGet::getInstance('user_id')->get();
+        
+        $getFollow = $this->modelObj->where(['user_id'=>$userId])->field('f_id')->find();
+        
+        $join = "left join db_user_header as h on u.id = h.user_id";
+        
+        $field = "u.id,u.user_name,u.nick_name,h.user_header";
+        
+        $where['u.id'] = ['not in' , $getFollow['f_id']];
+        
+        $getUser = $this->userModelObj->alias('u')->join($join)->where($where)->field($field)
+                    ->limit('3')->select();
+        
+        return $getUser;
+    }
+    
+    public function addFollow()
+    {
+        $userId = SessionGet::getInstance('user_id')->get();
+        
+        $isUser = $this->modelObj->isUserFollow($userId);
+        
+        $arr['user_id'] = $userId;
+        $arr['status'] =1;
+        if(empty($isUser)){
+            $arr['f_id'] = $this->data['id'];
+            $this->modelObj->add($arr);
+        }else{
+            $isFollower = $this->modelObj->isFollower($userId , $this->data['id']);
+            if(!empty($isFollower)){
+                return $arr = ['status'=>0,'message'=>'unsuccess','data'=>false];
+            }
+                $where['user_id'] = $userId;
+            
+                $getFollow = $this->modelObj->where($where)->field('f_id')->find();
+                
+                $arr['f_id'] = $getFollow['f_id'].','.$this->data['id'];
+                
+                $this->modelObj->where(['user_id'=>$userId])->save($arr);
+                
+                return $arr = ['status'=>1,'message'=>'success','data'=>true];
         }
-        return $getdata;
-
     }
-
-    public function getAllFollow()
-    {
-     $where['id'] = $this->data['id'];
-     $save = M('goods_spec')->where($where)->field('status')->select();
-     $save = $save[1];
-     if($save['status']==1){
-        $data = ['status'=>0];
-        $res = M('goods_spec')->where($where)->save($data);
-    }else{
-        $data = ['status'=>1];
-        $res = M('goods_spec')->where($where)->save($data);
-    }
-    if($res){
-        echo "follow";
-    }else{
-        echo "unfollow";
-    }
-
-}
-
-
-
-
-
 
 }
