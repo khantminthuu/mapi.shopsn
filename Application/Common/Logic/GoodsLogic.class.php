@@ -392,15 +392,12 @@ class GoodsLogic extends AbstractGetDataLogic
             $order = 'create_time DESC';
         }
         $keyword = $post['keyword']; 
-        $page = empty($post['page'])?0:$post['page'];
+        $page = empty($post['page']) ? 0 : $post['page'];
         $where['title'] = array('like','%'.$keyword.'%');
         $where['p_id']  = array( 'EQ', '0' );
         $where[GoodsModel::$shelves_d] = '1';
         $where[GoodsModel::$approvalStatus_d] = '1';
-
         $field = "id,id as goods_id,p_id,price_member as goods_price,title,sales_sum,comment_member";
-
-        
         $goods = $this->modelObj->getGoodsByWhere($field,$where,$page,$order); // 实例化User对象
         if (!empty($goods['data'])) {
             $goods['data'] = $this->goodsImagesModel->getgoodImageByGoods($goods['data']);

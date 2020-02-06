@@ -69,7 +69,7 @@ class FollowImageLogic extends AbstractGetDataLogic
             $this->modelObj->add($arr);
         }else{
             $isFollower = $this->modelObj->isFollower($userId , $this->data['id']);
-            if(!empty($isFollower)){
+            if(empty($isFollower)){
                 return $arr = ['status'=>0,'message'=>'unsuccess','data'=>false];
             }
                 $where['user_id'] = $userId;

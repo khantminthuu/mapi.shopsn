@@ -50,13 +50,12 @@ class FollowImageModel extends BaseModel
    
    public function isFollower($id , $f_id)
    {
-       $where['f_id'] = ['like','%'.$f_id.'%'];
        $where['user_id'] = $id;
-       $isFollower = $this->where($where)->find();
-       if(empty($isFollower)){
+       $isFollower = $this->where($where)->field('f_id')->find();
+       $arr = explode(',',$isFollower['f_id']);
+       if(in_array($f_id,$arr)){
            return false;
        }
        return true;
-       
    }
 }
