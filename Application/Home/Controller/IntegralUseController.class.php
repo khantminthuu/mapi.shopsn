@@ -49,15 +49,15 @@ class IntegralUseController
     public function confirmPay(){
         //检测传值                  //检测方法
         $checkObj = new CheckParam($this->logic->getValidateByOrder(), $this->args);
-
+        
         $status = $checkObj->checkParam();
-
+        
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
-
+        
         $ret = $this->logic->commitPayForGoods();
-
+        
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
-
+        
         $this->objController->ajaxReturnData($ret['data'],$ret['status'],$ret['message']);
     }
     /*khantminthu*/
@@ -73,7 +73,7 @@ class IntegralUseController
         $ret = $this->logic->getDailyBonus();
 
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
-
+        
         $this->objController->ajaxReturnData($ret);
     }
     
@@ -86,6 +86,17 @@ class IntegralUseController
     
     public function test()
     {
+//        $checkObj = new CheckParam($this->logic->getValidateByName(), $this->args);
+//
+//        $status = $checkObj->checkParam();
+//
+//        $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
         $rett = $this->logic->test();
+        
+        $this->objController->promptPjax($rett , $checkObj->getErrorMessage());
+        
+        $this->objController->ajaxReturnData($rett['status'],$rett['message'],$rett['data']);
     }
+   
 } 

@@ -174,14 +174,12 @@ class CheckParam {
 	public function checkParam() :bool
 	{
 		$message = $this->messageNotice;
-
 		if (empty ( $message ) || empty ( $this->data )) {
 			$this->errorMessage = '请传递参数';
 			return false;
 		}
 
 		$message = Event::insertObjectCallBack ( 'parperParam', $message );
-
 		$result = false;
 
 		foreach ( $message as $key => $value ) {

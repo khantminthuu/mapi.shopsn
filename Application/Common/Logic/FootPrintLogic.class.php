@@ -20,7 +20,6 @@ class FootPrintLogic extends AbstractGetDataLogic
         $this->splitKey = $split;
         $this->modelObj = new FootPrintModel();
         $this->goodsModel = new GoodsModel();
-
     }
     /**
      * 返回验证数据
@@ -39,6 +38,7 @@ class FootPrintLogic extends AbstractGetDataLogic
      */
     public function getResult()
     {
+    
     }
 
     /**

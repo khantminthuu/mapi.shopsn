@@ -1,18 +1,14 @@
 <?php
 
-public function getFollow($id)
+public  function getVideoUpload()
 {
-    $where['user_id'] = $id;
-    $where['status'] = 1;
-    $getFollow = $this->where($where)->field('user_id,f_id')->select();
-    foreach ($getFollow as $value)
-    {
-        $arr[] = $value['user_id'];
+    $join = "left join db_user_header as b on u.id = b.user_id";
+    $field = "u.id , u.user_name , u.nick_name , b.user_header";
+    $getUser = $this->userModelObj->alias(u)->join($join)->field($field)->select();
+    foreach ($getUser as $key =>$value){
+        $getUploadVideo = $this->modelObj->getUploadVideo($value['id']);
+        var_dump($getUploadVideo);
+        $getUser[$key]['UploadVideo'] = $getUploadVideo;
     }
-    $follow = count($arr);
-    $follower = $this->where(['f_id'=>$id,'status'=>1])->count();
-    return  $arr = array(
-        'follow' => $follow,
-        'follower' => $follower
-    );
+    return $getUser;
 }

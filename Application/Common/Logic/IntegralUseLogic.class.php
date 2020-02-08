@@ -9,6 +9,7 @@ use Common\Model\IntegralDailyModel;
 use Think\Cache;
 use Think\SessionGet;
 use Think\Log;
+use Think\Page;
 use Common\SessionParse\SessionManager;
 /**
  * 逻辑处理层
@@ -523,19 +524,32 @@ class IntegralUseLogic extends AbstractGetDataLogic
     	
     	return $data;
     }
-    
+    public function getValidateByName()
+    {
+        return array(
+            'page' => array(
+                'required' => "we need get name ",
+            ),
+        );
+    }
     public function test()
     {
-        $userId = $_SESSION['user_id'];
-        $user = $this->modelObj->alias('a')
-                ->join('left join db_user as u on u.id =  a.user_id ')
-                ->join('left join db_user_header as h on h.user_id = u.id')
-                ->field('a.integral , u.user_name , h.user_header')
-                ->where(['a.user_id'=>$userId])
-                ->find();
+        $arr = [
+            'name' => "khant",
+            'age' => 23
+        ];
+        $str = implode(' ',$arr);
+        $arr = explode(' ',$str);
+        $array = str_split($str,4);
+        $strRepeat = str_repeat($str , 20);
+        echo "$strRepeat";
+        echo "<hr>";
         echo "<pre>";
-        print_r($user);
+        print_r($arr);
+        echo "<hr>";
+        print_r($arr);
+        echo "<hr>";
+        echo $str;
         die;
-       
     }
 }

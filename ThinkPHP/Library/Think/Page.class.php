@@ -76,7 +76,6 @@ class Page{
      */
     public function show() {
         if(0 == $this->totalRows) return '';
-
         /* 生成URL */
         $this->parameter[$this->p] = '[PAGE]';
         $this->url = U(ACTION_NAME, $this->parameter);
@@ -85,7 +84,6 @@ class Page{
         if(!empty($this->totalPages) && $this->nowPage > $this->totalPages) {
             $this->nowPage = $this->totalPages;
         }
-
         /* 计算分页临时变量 */
         $now_cool_page      = $this->rollPage/2;
         $now_cool_page_ceil = ceil($now_cool_page);

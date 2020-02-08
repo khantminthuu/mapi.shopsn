@@ -179,7 +179,6 @@ class GoodsClassController
             $this->objController->ajaxReturnData("","0","请求失败");
         }
     }
-
     /**
      * 首页楼层数据
      */
@@ -194,6 +193,7 @@ class GoodsClassController
     	$this->objController->promptPjax($goodsClass, '暂无分类');
         //获取分类广告图片
         $adLogic = new AdLogic($goodsClass);
+        
         $class = $adLogic->getFloorAd();
     	//推荐分类的商品
         $goodsLogic = new GoodsLogic($goodsClass);
@@ -208,5 +208,5 @@ class GoodsClassController
 
         $this->objController->ajaxReturnData(['goods' => $source, 'class' => $goodsClass,'ad'=>$class]);
     }
-
+    
 }
