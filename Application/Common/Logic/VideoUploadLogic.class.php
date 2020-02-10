@@ -15,7 +15,6 @@ class VideoUploadLogic extends AbstractGetDataLogic
         $this->modelObj = new VideoUploadModel();
         $this->userModelObj = new UserModel();
     }
-    
     /**
      * 获取结果
      */
@@ -23,7 +22,6 @@ class VideoUploadLogic extends AbstractGetDataLogic
     {
         // TODO: Implement getResult() method.
     }
-    
     /**
      * 获取当前模型类名
      */
@@ -39,8 +37,8 @@ class VideoUploadLogic extends AbstractGetDataLogic
     {
         return array(
             'id' => array(
-                'required' => "key must id"
-            )
+                'required' => "key must id",
+            ),
         );
     }
     ##get video upload from controller
@@ -89,6 +87,13 @@ class VideoUploadLogic extends AbstractGetDataLogic
             return ['status'=>1,'message'=>'remove User','data'=>$ret];
         }
         return ['status'=>0,'message'=>'save is not success','data'=>[]];
+    }
+    ##getComment
+    public function getComment()
+    {
+        $userId = SessionGet::getInstance('user_id')->get();
+        
+        
     }
     
 }

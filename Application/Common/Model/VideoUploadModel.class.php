@@ -37,14 +37,6 @@ class VideoUploadModel extends BaseModel
         }
         
     }
-//    public function 2($id)
-//    {
-//        $getUserId = $this->where(['user_id'=>$id])->find();
-//        if(!empty($getUserId)){
-//            return true;
-//        }
-//        return false;
-//    }
     ##getUploadvideo from VideoUploadLogic
     public function getUploadVideo($id)
     {
@@ -56,7 +48,6 @@ class VideoUploadModel extends BaseModel
         $likeCount = count(explode(',',$getPostCount['like']));
         $getPostVideo['like'] = $likeCount;
         $getPostVideo['comment'] = $commentCount;
-        
         return  $getPostVideo;
     }
  
