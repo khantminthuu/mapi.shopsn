@@ -67,18 +67,18 @@ class VideoUploadLogic extends AbstractGetDataLogic
         $getId = $this->data['id'];
         $where['user_id'] = $this->data['id'];
         $isUser = $this->modelObj->isUser($getId , $userId   );
-        if($isUser['a'] == 1) {
+        if($isUser['a'] == 1) {         //new user like
             $arr['like'] = $userId;
             $ret = $this->modelObj->where(['user_id' => $getId])->save($arr);
             return ['status'=>1,'message'=>'save','data'=>$ret];
         }
-        if($isUser['a']==2){
+        if($isUser['a']==2){            //exiting user like
             $getUser = $this->modelObj->where(['user_id'=>$getId])->field('like')->find();
             $arr['like'] = $getUser['like'].','.$userId;
             $ret = $this->modelObj->where(['user_id'=>$getId])->save($arr);
             return ['status'=>1,'message'=>'save','data'=>$ret];
         }
-        if($isUser['a']==3){
+        if($isUser['a']==3){        //remove user like when toggle
             $getUser = $this->modelObj->where(['user_id'=>$getId])->field('like')->find();
             $strNo = strlen(','.$userId);
             $str = substr($getUser['like'],0,-$strNo);
@@ -92,6 +92,8 @@ class VideoUploadLogic extends AbstractGetDataLogic
     public function getComment()
     {
         $userId = SessionGet::getInstance('user_id')->get();
+        $getId = $this->data['id'];
+        
         
         
     }
