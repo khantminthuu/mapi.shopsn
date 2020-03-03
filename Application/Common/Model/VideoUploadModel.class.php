@@ -16,6 +16,8 @@ class VideoUploadModel extends BaseModel
 
 	public static $like_d;	//Which user like
 
+	public static $status_d;	//Status 1 is for show , 0 is hidden
+
     public static function getInitnation()
     {
         $class = __CLASS__;

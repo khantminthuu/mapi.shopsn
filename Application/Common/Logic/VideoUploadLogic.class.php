@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 namespace Common\Logic;
+use Common\Model\VideoUploadComment;
 use Think\SessionGet;
 use Think\Cache;
 use Think\Log;
 use Common\Model\VideoUploadModel;
+use Common\Model\VideoUploadCommentModel;
 use Common\Model\UserModel;
 class VideoUploadLogic extends AbstractGetDataLogic
 {
@@ -13,6 +15,7 @@ class VideoUploadLogic extends AbstractGetDataLogic
         $this->data = $data;
         $this->splitKey = $split;
         $this->modelObj = new VideoUploadModel();
+        $this->commentModelObj = new VideoUploadCommentModel();
         $this->userModelObj = new UserModel();
     }
     /**
@@ -93,9 +96,9 @@ class VideoUploadLogic extends AbstractGetDataLogic
     {
         $userId = SessionGet::getInstance('user_id')->get();
         $getId = $this->data['id'];
-        
-        
-        
+        $where['f_id'] = $getId;
+        $field = array('user_id','comment');
+        return $getUserComment = $this->commentModelObj->where($where)->field($field)->select();
     }
     
 }

@@ -64,6 +64,7 @@ class PcenterController
         
         $this->objController->ajaxReturnData($ret);
     }
+    
     public function test()
     {
         $test = $this->logic->test();
