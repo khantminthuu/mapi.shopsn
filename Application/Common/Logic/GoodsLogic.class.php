@@ -803,17 +803,18 @@ class GoodsLogic extends AbstractGetDataLogic
         public function getGoodDetail()    :array
         {
            $key = 'goods_detail'.$this->data['id'];
-
+           
            $cache = Cache::getInstance('',['exprie'=>60]);
 
            $data = $cache->get($key);       //bool
-
+          
            if(!empty($data)){
             return $data;
         }
 
         // $data = $this->getGoodsDetail();
         $data = $this->modelObj->getGoodsDetail($this->data);
+        
         if(empty($data)){
             $this->errorMessage = '没有找到这个商品任何信息';
             return [];

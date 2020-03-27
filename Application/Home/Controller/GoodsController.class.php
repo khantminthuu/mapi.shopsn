@@ -124,10 +124,7 @@ class GoodsController {
 		$this->objController -> promptPjax( $this->logic->checkIdIsNumric() ,$this->logic->getErrorMessage());	//get array is numeric?
 
 		$ret = $this->logic->getGoodDetail();
-
-		echo " <pre>";
-		var_dump($ret);
-
+  
 		$this->objController->promptPjax($ret , $this->logic->getErrorMessage());
 
 		$goodsImageLogic = new GoodsImagesLogic($ret , $this->logic->getSplitKeyByPId());

@@ -59,9 +59,7 @@ class GoodsClassController
              $status = $checkObj->checkParam();
 
              $this->objController->promptPjax($status, $checkObj->getErrorMessage());
-
-             /*This is check for data exit*/
-
+             
              $ret = $this->logic->getClass();
 
              $this->objController->promptPjax($ret, $this->logic->getErrorMessage());

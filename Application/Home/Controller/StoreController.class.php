@@ -137,7 +137,8 @@ class StoreController
 
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
 
-        $ret = $this->logic->getShopDetails();     
+        $ret = $this->logic->getShopDetails();
+        
         $this->objController->promptPjax($ret, $this->logic->getErrorMessage());
         
         $this->objController->ajaxReturnData($ret['data'],$ret['status'],$ret['message']);
@@ -297,10 +298,7 @@ class StoreController
         $this->objController->promptPjax ( $status, $checkObj->getErrorMessage () );
 
         $ret = $this->logic->getDiscountDetail();
-
-        echo "<pre>";
-        var_dump($ret);
-
+        
         $this->objController->promptPjax($ret,$this->logic->getErrorMessage());
 
         $this->objController->ajaxReturnData($ret);

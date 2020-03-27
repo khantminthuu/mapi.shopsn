@@ -3,6 +3,7 @@ namespace Home\Controller;
 use Common\TraitClass\InitControllerTrait;
 use Think\SessionGet;
 use Common\Logic\ReviewLogic;
+use Validate\CheckParam;
 
 class ReviewController
 {
@@ -20,8 +21,12 @@ class ReviewController
 	}
 	public function getUserReview()
 	{	
-		$userId = SessionGet::getInstance('user_id')->get();
-
+		$checkObj = new CheckParam($this->logic->getValidateByLogin(),$this->args);
+		
+		$status  = $checkObj->checkParam();
+        
+        $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
 		$ret = $this->logic->getUserReview();
 
 		$this->objController->promptPjax($ret , $this->logic->getErrorMessage());

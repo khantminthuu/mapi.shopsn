@@ -28,6 +28,17 @@ class ReviewLogic extends AbstractGetDataLogic
     	$ret = $modelObj->getModel();
         return [ ];
     }
+    
+    public function getValidateByLogin()
+    {
+        $message =[
+            'id'=>[
+                'required'=> "必须输入品牌ID",
+            ],
+        ];
+        return $message;
+    }
+    
     public function getUserReview()
     {
     	$where['goods_id'] = $this->data['id'];

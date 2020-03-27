@@ -144,14 +144,24 @@ class IntegralUseLogic extends AbstractGetDataLogic
         if(empty($getUser)){
 
             $this->integralObj->addDaily($this->NewUser($userId , $time));
-            $this->addUserIntegral();
+            $ret = $this->addUserIntegral();
+            if($ret){
+                return "success";
+            }else{
+                return "unsuccess";
+            }
             
         }else{
             if($timestamp <22){
                 return $this->getTimeDelay();
             }
             $this->integralObj->saveArr($this->IsSesUser($userId , $time) , $userId);
-            $this->addUserIntegral();
+            $ret = $this->addUserIntegral();
+            if($ret){
+                return "success";
+            }else{
+                return "unsuccess";
+            }
         }
 
     }
@@ -187,8 +197,9 @@ class IntegralUseLogic extends AbstractGetDataLogic
             case 0.6: $integral = 5.0;
             break;
         }
-        $arr['integral'] = $integral;
+        $arr['integral'] = !empty($integral)?$integral:0.1;
         $arr['time'] = $time;
+        $arr['noti'] = 1;
         return $arr;
     }
 

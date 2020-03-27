@@ -44,7 +44,7 @@ class FollowImageLogic extends AbstractGetDataLogic
         
         $getFollow = $this->modelObj->where(['user_id'=>$userId])->field('f_id')->find();
         
-        $join = "left join db_user_header as h on u.id = h.user_id";
+        $join = "right join db_user_header as h on u.id = h.user_id";
         
         $field = "u.id,u.user_name,u.nick_name,h.user_header";
         

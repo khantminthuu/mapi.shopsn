@@ -193,6 +193,6 @@ class PromotionController
     {
         $adModel = M('ad');
         $goodsModel = M('goods');
-        $
+        
     }
 }

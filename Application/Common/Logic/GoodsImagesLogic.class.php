@@ -356,9 +356,9 @@ class GoodsImagesLogic extends AbstractGetDataLogic
         if(!empty($data)){
             return $data;
         }
-        // $data = $this->getGoodImage();
+       
         $data =  $this->modelObj->getImage($this->data,$this->splitKey);
-        
+    
         if(empty($data)){
             return [];
         }

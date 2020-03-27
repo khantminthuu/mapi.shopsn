@@ -21,9 +21,7 @@ class GoodsAttrController
         $this->args = $args;
 
         $this->goodsAttrLogic = new GoodsAttrLogic($args);
-
-     
-
+        
     }
     /**
      * 得到商品的规格参数
@@ -44,5 +42,5 @@ class GoodsAttrController
 
         $this->objController->ajaxReturnData($ret);
     }
-
+    
 }

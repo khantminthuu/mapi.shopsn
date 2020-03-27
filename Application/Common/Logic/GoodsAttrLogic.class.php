@@ -68,8 +68,8 @@ class GoodsAttrLogic extends AbstractGetDataLogic
         return $message;
     }
 
-    public function getGoodsAttrs(){
-
+    public function getGoodsAttrs()
+    {
         $this->searchTemporary = [
             GoodsAttrModel::$goodsId_d => $this->data[GoodsAttrModel::$goodsId_d],
         ];
@@ -80,9 +80,7 @@ class GoodsAttrLogic extends AbstractGetDataLogic
             $reData['records'][$key]['attrName'] = $name;
         }
         return $reData;
-
-
     }
-
+    
    
 }

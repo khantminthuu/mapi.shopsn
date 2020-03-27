@@ -19,11 +19,11 @@ class CategoryController
 	}
 	public function getCategory()
 	{
-		// $checkobj = new CheckParam($this->logic->getValidateByLogin(),$this->args);
-
-		// $status = $checkobj->CheckParam();
-
-		// $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+//		 $checkobj = new CheckParam($this->logic->getValidateByLogin(),$this->args);
+//
+//		 $status = $checkobj->CheckParam();
+//
+//		 $this->objController->promptPjax($status, $checkObj->getErrorMessage());
 
 		$ret = $this->logic->getAllCategory();
 
@@ -41,5 +41,12 @@ class CategoryController
 		$this->objController->promptPjax($status, $this->logic->getErrorMessage());
 
 		$showData = $this->logic->saveShow();
+		
+		if(!empty($showData)){
+		    $this->objController->promptPjax(1,'Saved Successful',$showData);
+        }else{
+            $this->objController->promptPjax(0,'Unsuccessful',$showData);
+        }
+		
 	}
 }

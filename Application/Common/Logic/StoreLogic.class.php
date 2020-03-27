@@ -706,8 +706,6 @@ class StoreLogic extends AbstractGetDataLogic
         $order = parent::getSearchOrderKey();
         $retData = $this->modelObj->where($where)->field($field)->order($order)->find();
         $retData['goodsNumber'] = $this->goodModel->getShopGoodNumber($this->data['id']);
-
-
         return $retData;
     }
 
@@ -724,10 +722,6 @@ class StoreLogic extends AbstractGetDataLogic
         $ret['GoodsNumber'] = $this->goodModel->getShopGoodNumber($this->data['id']);
         $ret['discountNumber'] = $this->goodModel->getShopDiscountNumber($this->data['id']);
         $ret ['img'] =$this->goodsImagesModel->where(['goods_id'=>$this->data['id']])->field('pic_url')->select();
-        echo "<pre>";
-        var_dump($ret);
-        die;
-
         return $ret;
 
 

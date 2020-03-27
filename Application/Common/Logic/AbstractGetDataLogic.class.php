@@ -716,7 +716,7 @@ abstract class AbstractGetDataLogic
     public function addData()
     {
         $status = false;
-        
+       
         $data = $this->getParseResultByAdd();
         
         try {
