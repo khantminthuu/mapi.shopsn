@@ -52,12 +52,22 @@ class VideoUploadLogic extends AbstractGetDataLogic
             return false;
         }
         $arr = array_map('current',$isUserUpload);
-        $join = "left join db_user_header as b on u.id = b.user_id";
-        $field = "u.id , u.user_name , u.nick_name , b.user_header";
-        $where['u.id'] = ['IN',$arr];
-        $getUser = $this->userModelObj->alias(u)->join($join)->where($where)
-                ->field($field)->select();
+        
+        
+//        $join = "left join db_user_header as b on u.id = b.user_id";
+//
+//        $field = "u.id , u.user_name ,u.nick_name , b.user_header";
+//        $where['u.id'] = ['IN',$arr];
+//        $getUser = $this->userModelObj->alias(u)->join($join)->where($where)
+//                ->field($field)->select();
+        
+        $field = "id,user_name,nick_name";
+        $where['id'] = ['IN',$arr];
+        $getUser = $this->userModelObj->where($where)->field($field)->select();
+       
         foreach ($getUser as $key =>$value){
+            $getUserHeader = M('user_header')->where(['user_id'=>$value['id']])->field('user_header')->find();
+            $getUser[$key]['user_header'] = !empty($getUserHeader['user_header'])?$getUserHeader['user_header']:'';
             $getUploadVideo = $this->modelObj->getUploadVideo($value['id']);
             $getUser[$key]['UploadVideo'] = $getUploadVideo;
         }

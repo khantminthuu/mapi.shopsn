@@ -55,8 +55,7 @@ class VideoUploadController{
         $this->objController->promptPjax( $status, $checkObj->getErrorMessage());
         
         $ret = $this->logic->getComment();
-        echo "<pre>";
-        print_r($ret);
-        die;
+        
+        $this->objController->ajaxReturnData($ret);
     }
 }
