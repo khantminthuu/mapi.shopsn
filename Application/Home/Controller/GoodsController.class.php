@@ -162,11 +162,7 @@ class GoodsController {
 			'images' => $image
 		] );
 	}
-
-
-
-
-
+	
 	/**
 	 * 获取商品子类数据
 	 * 
@@ -343,7 +339,6 @@ class GoodsController {
      */
     public function oneClassGoods() :void
     {
-    	
     	$checkObj = new CheckParam($this->logic->getValidateByGoods(), $this->args);
     	
     	$status = $checkObj->checkParam();

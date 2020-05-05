@@ -86,6 +86,6 @@ class AdModel extends BaseModel
             ->select();
     }
 
-
+/*မြွေဖြူရှင်မနှင့် လျှို့ဝှက်ဆန်းကြယ်တဲ့မိန်းကလေး*/
 
 }

@@ -39,7 +39,5 @@ class AlbumClassModel extends BaseModel
         $field = "alb_cover";
         return $this->field($field)->where($where)->select();
     }
-
-
-
+    
 }

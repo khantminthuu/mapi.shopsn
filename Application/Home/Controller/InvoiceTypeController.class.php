@@ -68,6 +68,7 @@ class InvoiceTypeController
         $status = $checkObj->checkParam();
 
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
         $ret = $this->invoiceTypeLogic->getInvoicesAreRaisedAdd(); 
 
         $this->objController->promptPjax($ret, $this->invoiceTypeLogic->getErrorMessage());
@@ -86,6 +87,7 @@ class InvoiceTypeController
         $status = $checkObj->checkParam();
 
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
         $ret = $this->invoiceTypeLogic->getInvoicesAreRaisedDel(); 
 
         $this->objController->promptPjax($ret, $this->invoiceTypeLogic->getErrorMessage());
@@ -104,6 +106,7 @@ class InvoiceTypeController
         $status = $checkObj->checkParam();
 
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
         $ret = $this->invoiceTypeLogic->getInvoicesAreRaisedSave(); 
 
         $this->objController->promptPjax($ret, $this->invoiceTypeLogic->getErrorMessage());
@@ -140,6 +143,7 @@ class InvoiceTypeController
         $status = $checkObj->checkParam();
 
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
         $ret = $this->invoiceTypeLogic->getInvoicesOrderSave(); 
 
         $this->objController->promptPjax($ret, $this->invoiceTypeLogic->getErrorMessage());
@@ -158,7 +162,9 @@ class InvoiceTypeController
     public function capitaAdd(){
         //检测传值                  //检测方法
         $checkObj = new CheckParam($this->invoiceTypeLogic->getValidateByAddCapita(), $this->args);
+        
         $status = $checkObj->checkParam();
+        
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
 
         $ret = $this->invoiceTypeLogic->getCapitaAdd(); 
@@ -167,22 +173,29 @@ class InvoiceTypeController
 
         $this->objController->ajaxReturnData($ret['data'],$ret['status'],$ret['message']);
     }
+    
      //我的发票--修改增值发票
     public function capitaSave(){
         //检测传值                  //检测方法
         $checkObj = new CheckParam($this->invoiceTypeLogic->getValidateByDelAreRaised(), $this->args);
+        
         $status = $checkObj->checkParam();
+        
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
         //检测传值                  //检测方法
         $checkObj = new CheckParam($this->invoiceTypeLogic->getValidateByAddCapita(), $this->args);
+        
         $status = $checkObj->checkParam();
+        
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
         $ret = $this->invoiceTypeLogic->getCapitaSave(); 
 
         $this->objController->promptPjax($ret, $this->invoiceTypeLogic->getErrorMessage());
 
         $this->objController->ajaxReturnData($ret['data'],$ret['status'],$ret['message']);
     }
+    
      //我的发票--删除增值发票
     public function capitaDelete(){
         //检测传值                  //检测方法
@@ -191,6 +204,7 @@ class InvoiceTypeController
         $status = $checkObj->checkParam();
 
         $this->objController->promptPjax($status, $checkObj->getErrorMessage());
+        
         $ret = $this->invoiceTypeLogic->getCapitaDelete(); 
 
         $this->objController->promptPjax($ret, $this->invoiceTypeLogic->getErrorMessage());
